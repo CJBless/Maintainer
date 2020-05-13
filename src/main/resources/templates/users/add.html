@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container  body-content">
+<h1>Add User</h1>
+
+<nav th:replace="fragments :: page-header"></nav>
+
+<form method="post" style="max-width:600px;">
+    <div class="form-group">
+        <label th:for="name">Driver Name</label>
+        <input class="form-control" th:field="${user.name}" />
+        <span th:errors="${user.name}" class="error"></span>
+    </div>
+<!--
+    <div class="form-group">
+        <label th:for="vehicle">Vehicle</label>
+        <select name="vehicleId">
+            <option th:each="vehicle : ${vehicles}"
+                    th:text="${vehicle.name}"
+                    th:value="${vehicle.id}"></option>
+        </select>
+    </div>
+    -->
+
+    <input type="submit" value="Add User" />
+</form>
+
+</body>
+</html>

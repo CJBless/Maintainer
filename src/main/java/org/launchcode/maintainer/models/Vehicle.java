@@ -1,23 +1,28 @@
 package org.launchcode.maintainer.models;
 
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Vehicle extends AbstractEntity {
 
-    @NotBlank
     private int year;
 
-    @NotBlank
     private String make;
 
-    @NotBlank
     private String model;
 
+    @ManyToOne
     private User user;
 
-    private List<Appointment> appointments = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "vehicle_id")
+    private final List<Appointment> appointments = new ArrayList<>();
 
     public Vehicle() {}
 
@@ -53,7 +58,7 @@ public class Vehicle extends AbstractEntity {
         return appointments;
     }
 
-    public void setAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
+//    public void setAppointments(List<Appointment> appointments) {
+//        this.appointments = appointments;
+//    }
 }

@@ -1,16 +1,21 @@
 package org.launchcode.maintainer.models;
 
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class Appointment extends AbstractEntity {
 
     private Date date;
 
     private String location;
 
-    private final List<Vehicle> vehicles = new ArrayList<>();
+    @ManyToOne
+    private Vehicle vehicle;
 
     public Appointment() {}
 
@@ -30,7 +35,7 @@ public class Appointment extends AbstractEntity {
         this.location = location;
     }
 
-    public List<Vehicle> getVehicles() {
-        return vehicles;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 }

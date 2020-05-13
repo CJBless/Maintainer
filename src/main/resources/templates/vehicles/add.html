@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container  body-content">
+<h1>Add Vehicle</h1>
+
+<nav th:replace="fragments :: page-header"></nav>
+
+<form method="post" style="max-width:600px;">
+    <div class="form-group">
+        <label th:for="name">Vehicle Name</label>
+        <input class="form-control" th:field="${vehicle.name}" />
+        <span th:errors="${vehicle.name}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="year">Year</label>
+        <select name="year">
+            <option th:each="year : ${#numbers.sequence(1900, #dates.year(#dates.createNow()))}"
+                    th:text="${year}"
+                    th:value="${year}"></option>
+        </select>
+
+    </div>
+
+    <div class="form-group">
+        <label th:for="Make">Make</label>
+        <input class="form-control" th:field="${vehicle.make}" />
+        <span th:errors="${vehicle.make}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="model">Model</label>
+        <input class="form-control" th:field="${vehicle.model}" />
+        <span th:errors="${vehicle.model}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="user">Owner</label>
+        <select name="userId">
+            <option th:each="user : ${users}"
+                    th:text="${user.name}"
+                    th:value="${user.id}"></option>
+        </select>
+    </div>
+
+    <input type="submit" value="Add Vehicle" />
+</form>
+
+</body>
+</html>
