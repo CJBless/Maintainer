@@ -18,27 +18,27 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("add")
-    public String displayAddAppointmentForm(Model model) {
-        model.addAttribute("title", "Schedule Maintenance");
-        model.addAttribute(new Appointment());
-        return "add";
-    }
-
-    @PostMapping("add")
-    public String processAddAppointmentForm(@ModelAttribute @Valid Appointment newAppointment,
-                                      Errors errors, Model model, @RequestParam int vehicleId) {
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "Schedule Maintenance");
-            return "add";
-        }
-
-        return "redirect:";
-    }
-
-    @GetMapping("view/{appointmentId}")
-    public String displayViewAppointment(Model model, @PathVariable int appointmentId) {
-        return "view";
-    }
+//    @GetMapping("add")
+//    public String displayAddAppointmentForm(Model model) {
+//        model.addAttribute("title", "Schedule Maintenance");
+//        model.addAttribute(new Appointment());
+//        return "add";
+//    }
+//
+//    @PostMapping("add")
+//    public String processAddAppointmentForm(@ModelAttribute @Valid Appointment newAppointment,
+//                                      Errors errors, Model model, @RequestParam int vehicleId) {
+//        if (errors.hasErrors()) {
+//            model.addAttribute("title", "Schedule Maintenance");
+//            return "add";
+//        }
+//
+//        return "redirect:";
+//    }
+//
+//    @GetMapping("view/{appointmentId}")
+//    public String displayViewAppointment(Model model, @PathVariable int appointmentId) {
+//        return "view";
+//    }
 
 }

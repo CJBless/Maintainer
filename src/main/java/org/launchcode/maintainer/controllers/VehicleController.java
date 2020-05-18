@@ -1,6 +1,7 @@
 package org.launchcode.maintainer.controllers;
 
 import org.launchcode.maintainer.models.Vehicle;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -12,6 +13,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("vehicles")
 public class VehicleController {
+
 
     @GetMapping("add")
     public String displayAddVehicleForm(Model model) {
@@ -30,7 +32,7 @@ public class VehicleController {
     }
 
     @GetMapping("view/{vehicleId}")
-    public String displayViewVehicle(Model model, @PathVariable int vehicleId) {
+    public String displayViewVehicle(Model model, @PathVariable Integer vehicleId) {
 
         Optional optVehicle = null;
         if(optVehicle.isPresent()) {

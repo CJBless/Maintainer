@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container  body-content">
+<h1 th:text="${'Appointment: ' + appointment.name}">Default Title</h1>
+
+<div>
+    <p th:text="${'Name: ' + appointment.name}"></p>
+    <p th:text="${'Date: ' + appointment.date}"></p>
+    <p th:text="${'Location: ' + appointment.location}"></p>
+    <p th:text="${'Vehicle: ' + appointment.vehicle}"></p>
+</div>
+
+</body>
+</html>

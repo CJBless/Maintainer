@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container  body-content">
+<h1>Add User</h1>
+
+<nav th:replace="fragments :: page-header"></nav>
+
+<form method="post" style="max-width:600px;">
+    <div class="form-group">
+        <label th:for="name">Appointment Name</label>
+        <input class="form-control" th:field="${appointment.name}" />
+        <span th:errors="${appointment.name}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="date">Appointment Date</label>
+        <input class="form-control" th:field="${appointment.date}" />
+        <span th:errors="${appointment.date}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="location">Appointment Location</label>
+        <input class="form-control" th:field="${appointment.location}" />
+        <span th:errors="${appointment.location}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="vehicle">Vehicle</label>
+        <input class="form-control" th:field="${appointment.vehicle}" />
+        <span th:errors="${appointment.vehicle}" class="error"></span>
+    </div>
+
+    <input type="submit" value="Add Appointment" />
+</form>
+</body>
+</html>

@@ -7,23 +7,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+//Like Skills
 @Entity
 public class Appointment extends AbstractEntity {
 
-    private Date date;
+    private String date;
 
     private String location;
 
-    @ManyToOne
-    private Vehicle vehicle;
+    private String vehicle;
 
     public Appointment() {}
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -35,7 +36,11 @@ public class Appointment extends AbstractEntity {
         this.location = location;
     }
 
-    public Vehicle getVehicle() {
+    public String getVehicle() {
         return vehicle;
+    }
+
+    public void setVehicle(String vehicle) {
+        this.vehicle = vehicle;
     }
 }

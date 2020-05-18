@@ -1,15 +1,20 @@
 package org.launchcode.maintainer.models;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//Like Job
 @Entity
-public class Vehicle extends AbstractEntity {
+public class Vehicle {
+
+    @Id
+    @GeneratedValue
+    private int id;
+
+    private String name;
 
     private int year;
 
@@ -17,21 +22,19 @@ public class Vehicle extends AbstractEntity {
 
     private String model;
 
-    @ManyToOne
-    private User user;
+    private String user;
 
-    @OneToMany
-    @JoinColumn(name = "vehicle_id")
-    private final List<Appointment> appointments = new ArrayList<>();
+    private String appointments;
 
     public Vehicle() {}
 
-    public Vehicle(int aYear, String aMake, String aModel, User aUser) {
+    public Vehicle(int aYear, String aMake, String aModel, String aUser, String someAppointments) {
         super();
         this.year = aYear;
         this.make = aMake;
         this.model = aModel;
         this.user = aUser;
+        this.appointments = someAppointments;
     }
 
     public int getYear() {
@@ -46,19 +49,19 @@ public class Vehicle extends AbstractEntity {
         return model;
     }
 
-    public User getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(String aUser) {
+        this.user = aUser;
     }
 
-    public List<Appointment> getAppointments() {
+    public String getAppointments() {
         return appointments;
     }
 
-//    public void setAppointments(List<Appointment> appointments) {
-//        this.appointments = appointments;
-//    }
+    public void setAppointments(String appointments) {
+        this.appointments = appointments;
+    }
 }

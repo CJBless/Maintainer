@@ -43,16 +43,16 @@ public class UserController {
     }
 
     @GetMapping("view/{userId}")
-    public String displayViewUser(Model model, @PathVariable int userId) {
+    public String displayViewUser(Model model, @PathVariable Integer userId) {
 
-//        Optional<User> optUser = userRepository.findById(userId);
-//        if(optUser.isPresent()) {
-//            User user = (User) optUser.get();
-//            model.addAttribute("user", user);
+        Optional<User> optUser = userRepository.findById(userId);
+        if(optUser.isPresent()) {
+            User user = optUser.get();
+            model.addAttribute("user", user);
             return "users/view";
-//        } else {
-//            return "redirect:../";
-//        }
+        } else {
+            return "redirect:../";
+        }
 
     }
 
