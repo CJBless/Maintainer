@@ -15,6 +15,10 @@ public class User extends AbstractEntity {
     @NotBlank(message = "role must not be empty")
     private String role;
 
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<Vehicle> vehicles = new ArrayList<>();
+
     public User() {}
 
     public String getRole() {

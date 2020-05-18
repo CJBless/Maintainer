@@ -8,13 +8,7 @@ import java.util.List;
 
 //Like Job
 @Entity
-public class Vehicle {
-
-    @Id
-    @GeneratedValue
-    private int id;
-
-    private String name;
+public class Vehicle extends AbstractEntity {
 
     private int year;
 
@@ -22,13 +16,14 @@ public class Vehicle {
 
     private String model;
 
-    private String user;
+    @ManyToOne
+    private User user;
 
     private String appointments;
 
     public Vehicle() {}
 
-    public Vehicle(int aYear, String aMake, String aModel, String aUser, String someAppointments) {
+    public Vehicle(int aYear, String aMake, String aModel, User aUser, String someAppointments) {
         super();
         this.year = aYear;
         this.make = aMake;
@@ -49,11 +44,11 @@ public class Vehicle {
         return model;
     }
 
-    public String getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(String aUser) {
+    public void setUser(User aUser) {
         this.user = aUser;
     }
 
