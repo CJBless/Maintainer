@@ -16,7 +16,8 @@ public class Appointment extends AbstractEntity {
 
     private String location;
 
-    private String vehicle;
+    @ManyToOne
+    private Vehicle vehicle;
 
     public Appointment() {}
 
@@ -36,11 +37,11 @@ public class Appointment extends AbstractEntity {
         this.location = location;
     }
 
-    public String getVehicle() {
+    public Vehicle getVehicle() {
         return vehicle;
     }
 
-    public void setVehicle(String vehicle) {
+    public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
 }

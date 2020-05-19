@@ -2,6 +2,7 @@ package org.launchcode.maintainer.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,29 +11,34 @@ import java.util.List;
 @Entity
 public class Vehicle extends AbstractEntity {
 
-    private int year;
+    @NotBlank
+    private String year;
 
+    @NotBlank
     private String make;
 
+    @NotBlank
     private String model;
 
+    @NotNull
     @ManyToOne
     private User user;
 
-    private String appointments;
+    @OneToMany
+    @JoinColumn(name = "vehicle_id")
+    private List<Appointment> appointments = new ArrayList<>();
 
     public Vehicle() {}
 
-    public Vehicle(int aYear, String aMake, String aModel, User aUser, String someAppointments) {
-        super();
-        this.year = aYear;
-        this.make = aMake;
-        this.model = aModel;
-        this.user = aUser;
-        this.appointments = someAppointments;
-    }
+//    public Vehicle(String aYear, String aMake, String aModel, User aUser){
+//        super();
+//        this.year = aYear;
+//        this.make = aMake;
+//        this.model = aModel;
+//        this.user = aUser;
+//    }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
@@ -44,6 +50,18 @@ public class Vehicle extends AbstractEntity {
         return model;
     }
 
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
     public User getUser() {
         return user;
     }
@@ -52,11 +70,8 @@ public class Vehicle extends AbstractEntity {
         this.user = aUser;
     }
 
-    public String getAppointments() {
+    public List<Appointment> getAppointments() {
         return appointments;
     }
 
-    public void setAppointments(String appointments) {
-        this.appointments = appointments;
-    }
 }

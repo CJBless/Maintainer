@@ -28,4 +28,8 @@ public class User extends AbstractEntity {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
 }
