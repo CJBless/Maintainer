@@ -30,14 +30,6 @@ public class Vehicle extends AbstractEntity {
 
     public Vehicle() {}
 
-//    public Vehicle(String aYear, String aMake, String aModel, User aUser){
-//        super();
-//        this.year = aYear;
-//        this.make = aMake;
-//        this.model = aModel;
-//        this.user = aUser;
-//    }
-
     public String getYear() {
         return year;
     }

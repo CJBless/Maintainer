@@ -1,8 +1,14 @@
 package org.launchcode.maintainer.models;
 
+import org.apache.tomcat.jni.Local;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,20 +18,24 @@ import java.util.List;
 @Entity
 public class Appointment extends AbstractEntity {
 
-    private String date;
+    @DateTimeFormat(pattern = "dd/MM/yyyy h:mm a")
+    @NotNull
+    private LocalDateTime date;
 
+    @NotBlank
     private String location;
 
+    @NotNull
     @ManyToOne
     private Vehicle vehicle;
 
     public Appointment() {}
 
-    public String getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
