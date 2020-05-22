@@ -10,6 +10,13 @@
 <div class="container body-content">
     <h2>Maintenance Tracker</h2>
 
+    <div>
+        <ul>
+            <li  th:each="appointment : ${appointments}">
+                <a class="calendar" th:href="@{'/appointments/view/' + ${appointment.id}}" th:text="${appointment.name}"></a>
+            </li>
+        </ul>
+    </div>
 </div>
 
 </body>

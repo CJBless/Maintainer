@@ -1,6 +1,8 @@
 package org.launchcode.maintainer.controllers;
 
 import org.launchcode.maintainer.models.Vehicle;
+import org.launchcode.maintainer.models.data.UserRepository;
+import org.launchcode.maintainer.models.data.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +16,23 @@ import java.util.Optional;
 @RequestMapping("vehicles")
 public class VehicleController {
 
+    @Autowired
+    private VehicleRepository vehicleRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping
+    public String displayAllVehicles(Model model) {
+        model.addAttribute("title", "All Vehicles");
+        model.addAttribute("vehicles",vehicleRepository.findAll());
+        return "vehicles/index";
+    }
 
     @GetMapping("add")
     public String displayAddVehicleForm(Model model) {
         model.addAttribute(new Vehicle());
+        model.addAttribute("users", userRepository.findAll());
         return "vehicles/add";
     }
 
@@ -27,14 +42,14 @@ public class VehicleController {
         if (errors.hasErrors()) {
             return "vehicles/add";
         }
-
+        vehicleRepository.save(newVehicle);
         return "redirect:";
     }
 
     @GetMapping("view/{vehicleId}")
     public String displayViewVehicle(Model model, @PathVariable Integer vehicleId) {
 
-        Optional optVehicle = null;
+        Optional optVehicle = vehicleRepository.findById(vehicleId);
         if(optVehicle.isPresent()) {
             Vehicle vehicle = (Vehicle) optVehicle.get();
             model.addAttribute("vehicle", vehicle);

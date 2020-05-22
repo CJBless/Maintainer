@@ -1,6 +1,8 @@
 package org.launchcode.maintainer.controllers;
 
 import org.launchcode.maintainer.models.Appointment;
+import org.launchcode.maintainer.models.data.AppointmentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -11,34 +13,16 @@ import javax.validation.Valid;
 @Controller
 public class HomeController {
 
+    @Autowired
+    private AppointmentRepository appointmentRepository;
+
     @RequestMapping("")
     public String index(Model model) {
 
         model.addAttribute("title", "Dashboard");
+        model.addAttribute("appointments", appointmentRepository.findAll());
         return "index";
     }
 
-//    @GetMapping("add")
-//    public String displayAddAppointmentForm(Model model) {
-//        model.addAttribute("title", "Schedule Maintenance");
-//        model.addAttribute(new Appointment());
-//        return "add";
-//    }
-//
-//    @PostMapping("add")
-//    public String processAddAppointmentForm(@ModelAttribute @Valid Appointment newAppointment,
-//                                      Errors errors, Model model, @RequestParam int vehicleId) {
-//        if (errors.hasErrors()) {
-//            model.addAttribute("title", "Schedule Maintenance");
-//            return "add";
-//        }
-//
-//        return "redirect:";
-//    }
-//
-//    @GetMapping("view/{appointmentId}")
-//    public String displayViewAppointment(Model model, @PathVariable int appointmentId) {
-//        return "view";
-//    }
 
 }
