@@ -1,5 +1,6 @@
 package org.launchcode.maintainer.controllers;
 
+import org.apache.tomcat.jni.Local;
 import org.launchcode.maintainer.models.Appointment;
 import org.launchcode.maintainer.models.data.AppointmentRepository;
 import org.launchcode.maintainer.models.data.VehicleRepository;
@@ -45,6 +46,7 @@ public class AppointmentController {
         if (errors.hasErrors()) {
             return "appointments/add";
         }
+        model.addAttribute("appointment", appointmentRepository.findAll());
         appointmentRepository.save(newAppointment);
         return "redirect:";
     }
@@ -57,6 +59,7 @@ public class AppointmentController {
         if(optAppt.isPresent()) {
             Appointment appointment = optAppt.get();
             model.addAttribute("appointment", appointment);
+            model.addAttribute("apptRead", appointment.toString());
             return "appointments/view";
         } else {
             return "redirect:../";
