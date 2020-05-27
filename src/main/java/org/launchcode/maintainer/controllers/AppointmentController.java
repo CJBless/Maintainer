@@ -1,14 +1,19 @@
 package org.launchcode.maintainer.controllers;
 
+import org.apache.tomcat.jni.Local;
 import org.launchcode.maintainer.models.Appointment;
 import org.launchcode.maintainer.models.data.AppointmentRepository;
+import org.launchcode.maintainer.models.data.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -17,6 +22,9 @@ public class AppointmentController {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private VehicleRepository vehicleRepository;
 
     @GetMapping
     public String displayAllAppointments(Model model) {
@@ -28,6 +36,7 @@ public class AppointmentController {
     @GetMapping("add")
     public String displayAddAppointmentForm(Model model) {
         model.addAttribute(new Appointment());
+        model.addAttribute("vehicles", vehicleRepository.findAll());
         return "appointments/add";
     }
 
@@ -37,6 +46,7 @@ public class AppointmentController {
         if (errors.hasErrors()) {
             return "appointments/add";
         }
+        model.addAttribute("appointment", appointmentRepository.findAll());
         appointmentRepository.save(newAppointment);
         return "redirect:";
     }
@@ -49,6 +59,7 @@ public class AppointmentController {
         if(optAppt.isPresent()) {
             Appointment appointment = optAppt.get();
             model.addAttribute("appointment", appointment);
+            model.addAttribute("apptRead", appointment.toString());
             return "appointments/view";
         } else {
             return "redirect:../";

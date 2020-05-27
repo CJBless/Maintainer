@@ -6,10 +6,9 @@
 <h1 th:text="${'Appointment: ' + appointment.name}">Default Title</h1>
 
 <div>
-    <p th:text="${'Name: ' + appointment.name}"></p>
-    <p th:text="${'Date: ' + appointment.date}"></p>
+    <p th:text="${'Date and time: ' + appointment.dateTimeString}"></p>
     <p th:text="${'Location: ' + appointment.location}"></p>
-    <p th:text="${'Vehicle: ' + appointment.vehicle}"></p>
+    <p th:text="${'Vehicle: ' + appointment.vehicle.name}"></p>
 </div>
 
 </body>
