@@ -1,8 +1,8 @@
 package org.launchcode.maintainer.models;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +12,14 @@ import java.util.List;
 @Entity
 public class User extends AbstractEntity {
 
+//    @Email
+    private String emailAddress;
+
     @NotBlank(message = "role must not be empty")
     private String role;
 
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    private List<Vehicle> vehicles = new ArrayList<>();
+    @ManyToMany(mappedBy = "users")
+    private final List<Vehicle> vehicles = new ArrayList<>();
 
     public User() {}
 
@@ -31,5 +33,9 @@ public class User extends AbstractEntity {
 
     public List<Vehicle> getVehicles() {
         return vehicles;
+    }
+
+    public void setVehicles(Vehicle vehicle){
+        this.vehicles.add(vehicle);
     }
 }
