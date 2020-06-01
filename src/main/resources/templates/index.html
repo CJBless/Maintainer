@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head">
 </head>
-<body>
+<body onload="today">
 
 <div th:replace="fragments :: page-header"></div>
 
@@ -13,9 +13,13 @@
     <div>
         <ul>
             <li  th:each="appointment : ${appointments}">
-                <a class="calendar" th:href="@{'/appointments/view/' + ${appointment.id}}" th:text="${appointment.name}"></a>
+                <a th:href="@{'/appointments/view/' + ${appointment.id}}" th:text="${appointment.name}"></a>
             </li>
         </ul>
+    </div>
+    <div>
+        <h1 class="calendar" align="center" th:text="${'calendar here'}"></h1>
+
     </div>
 </div>
 

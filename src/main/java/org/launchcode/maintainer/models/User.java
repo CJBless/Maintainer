@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//like Employer
 @Entity
 public class User extends AbstractEntity {
 
@@ -20,6 +19,11 @@ public class User extends AbstractEntity {
     private List<Vehicle> vehicles = new ArrayList<>();
 
     public User() {}
+
+    public User(String role){
+        super();
+        this.role = role;
+    }
 
     public String getRole() {
         return role;
