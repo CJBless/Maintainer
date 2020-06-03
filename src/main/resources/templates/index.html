@@ -1,26 +1,44 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head">
+<head>
+<!--    <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>-->
+<!--    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet' />-->
+    <link rel='stylesheet' type='text/css' th:href="@{/css/main.css}" />
+    <link rel='stylesheet' type='text/css' th:href="@{/css/dayGrid_main.css}" />
+    <link rel='stylesheet' type='text/css' th:href="@{/css/bootstrap_main.css}" />
+    <link rel='stylesheet' type='text/css' th:href="@{/css/bootstrap.css}" />
+
+    <script type='text/javascript' th:src="@{/js/main.js}"></script>
+    <script type='text/javascript' th:src="@{/js/main.min.js}"></script>
+    <script type='text/javascript' th:src="@{/js/dayGrid_main.js}"></script>
+    <script type='text/javascript' th:src="@{/js/bootstrap_main.js}"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+        var calendarE1 = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarE1, {
+
+        });
+        calendar.render();
+    });
+    </script>
+
+
 </head>
-<body onload="today">
+<body>
 
 <div th:replace="fragments :: page-header"></div>
 
 <div class="container body-content">
     <h2>Maintenance Tracker</h2>
 
-    <div>
         <ul>
             <li  th:each="appointment : ${appointments}">
                 <a th:href="@{'/appointments/view/' + ${appointment.id}}" th:text="${appointment.name}"></a>
             </li>
         </ul>
     </div>
-    <div>
-        <h1 class="calendar" align="center" th:text="${'calendar here'}"></h1>
 
-    </div>
 </div>
 
 </body>
