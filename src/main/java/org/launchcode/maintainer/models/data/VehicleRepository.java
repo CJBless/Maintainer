@@ -9,4 +9,7 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public interface VehicleRepository extends CrudRepository<Vehicle, Integer> {
+
+    public Vehicle findByName(String name);
+
 }

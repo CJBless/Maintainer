@@ -19,17 +19,15 @@ import java.util.Calendar;
 import java.util.List;
 
 @Controller
+@RequestMapping("")
 public class HomeController {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    @RequestMapping("")
-    public String index(Model model) {
-        Calendar cal = Calendar.getInstance();
-        model.addAttribute("appointments", appointmentRepository.findAll(Sort.by("dateTime").ascending()));
+    @GetMapping("")
+    public String dashboard(){
         return "index";
     }
-
 
 }

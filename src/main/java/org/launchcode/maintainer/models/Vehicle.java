@@ -1,28 +1,30 @@
 package org.launchcode.maintainer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
-//Like Job
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Vehicle extends AbstractEntity {
 
     @NotBlank
-    private String year;
-
-    @NotBlank
-    private String make;
-
-    @NotBlank
-    private String model;
+    private String year, make, model;
 
     @NotNull
-    @ManyToOne
-    private User user;
+    @ManyToMany
+    @JoinTable(name = "vehicle_owner", joinColumns = {
+            @JoinColumn(name = "vehicle_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "owner_id")
+    })
+    @JsonIgnoreProperties("vehicles")
+    private Set<Owner> owners;
 
     @OneToMany
     @JoinColumn(name = "vehicle_id")
@@ -54,12 +56,16 @@ public class Vehicle extends AbstractEntity {
         this.model = model;
     }
 
-    public User getUser() {
-        return user;
+    public Set<Owner> getOwners() {
+        return owners;
     }
 
-    public void setUser(User aUser) {
-        this.user = aUser;
+    public void setOwner(Owner owner) {
+        this.owners.add(owner);
+    }
+
+    public void removeOwner(Owner owner){
+        this.owners.remove(owner);
     }
 
     public List<Appointment> getAppointments() {

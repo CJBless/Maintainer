@@ -3,13 +3,13 @@
 <head th:replace="fragments :: head">
 </head>
 <body class="container  body-content">
-<h1 th:text="${'User: ' + user.name}">Default Title</h1>
+<h1 th:text="${'User: ' + owner.name}">Default Title</h1>
 
 <nav th:replace="fragments :: page-header"></nav>
 
 <div class="job-listing">
-    <p th:text="${'Name: ' + user.name}"></p>
-    <p th:text="${'Role: ' + user.role}"></p>
+    <p th:text="${'Name: ' + owner.name}"></p>
+    <p th:text="${'Role: ' + owner.role}"></p>
 </div>
 
 

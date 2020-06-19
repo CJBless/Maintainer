@@ -1,19 +1,17 @@
 package org.launchcode.maintainer.controllers;
 
-import org.apache.tomcat.jni.Local;
 import org.launchcode.maintainer.models.Appointment;
-import org.launchcode.maintainer.models.data.AppointmentRepository;
-import org.launchcode.maintainer.models.data.VehicleRepository;
+import org.launchcode.maintainer.models.AppointmentType;
+import org.launchcode.maintainer.service.AppointmentService;
+import org.launchcode.maintainer.service.AppointmentTypeService;
+import org.launchcode.maintainer.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -21,22 +19,26 @@ import java.util.Optional;
 public class AppointmentController {
 
     @Autowired
-    private AppointmentRepository appointmentRepository;
+    private AppointmentService apptService;
 
     @Autowired
-    private VehicleRepository vehicleRepository;
+    private AppointmentTypeService apptTypeService;
 
-    @GetMapping
+    @Autowired
+    private VehicleService vehicleService;
+
+    @GetMapping("")
     public String displayAllAppointments(Model model) {
         model.addAttribute("title", "All Appointments");
-        model.addAttribute("appointments",appointmentRepository.findAll());
+        model.addAttribute("appointments", apptService.getAllAppointments());
         return "appointments/index";
     }
 
     @GetMapping("add")
     public String displayAddAppointmentForm(Model model) {
         model.addAttribute(new Appointment());
-        model.addAttribute("vehicles", vehicleRepository.findAll());
+        model.addAttribute("vehicles", vehicleService.getAllVehicles());
+        model.addAttribute("apptTypes", apptService.getAllAppointmentTypes());
         return "appointments/add";
     }
 
@@ -46,15 +48,15 @@ public class AppointmentController {
         if (errors.hasErrors()) {
             return "appointments/add";
         }
-        model.addAttribute("appointment", appointmentRepository.findAll());
-        appointmentRepository.save(newAppointment);
+        model.addAttribute("appointment", apptService.getAllAppointments());
+        apptService.addAppointment(newAppointment);
         return "redirect:";
     }
 
     @GetMapping("view/{appointmentId}")
     public String displayViewAppointment(Model model, @PathVariable Integer appointmentId) {
 
-        Optional<Appointment> optAppt = appointmentRepository.findById(appointmentId);
+        Optional<Appointment> optAppt = apptService.getSingleAppointment(appointmentId);
 
         if(optAppt.isPresent()) {
             Appointment appointment = optAppt.get();

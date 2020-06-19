@@ -1,7 +1,7 @@
 package org.launchcode.maintainer.controllers;
 
 import org.launchcode.maintainer.models.Vehicle;
-import org.launchcode.maintainer.models.data.UserRepository;
+import org.launchcode.maintainer.models.data.OwnerRepository;
 import org.launchcode.maintainer.models.data.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ public class VehicleController {
     private VehicleRepository vehicleRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private OwnerRepository ownerRepository;
 
     @GetMapping
     public String displayAllVehicles(Model model) {
@@ -32,7 +32,7 @@ public class VehicleController {
     @GetMapping("add")
     public String displayAddVehicleForm(Model model) {
         model.addAttribute(new Vehicle());
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", ownerRepository.findAll());
         return "vehicles/add";
     }
 
