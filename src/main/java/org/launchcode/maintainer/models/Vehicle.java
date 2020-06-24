@@ -14,17 +14,17 @@ import java.util.Set;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Vehicle extends AbstractEntity {
 
-    @NotBlank
+    @NotBlank(message = "Must not be blank")
     private String year, make, model;
 
-    @NotNull
+    @NotNull(message = "Must include at least one owner.")
     @ManyToMany
     @JoinTable(name = "vehicle_owner", joinColumns = {
             @JoinColumn(name = "vehicle_id") }, inverseJoinColumns = {
             @JoinColumn(name = "owner_id")
     })
     @JsonIgnoreProperties("vehicles")
-    private Set<Owner> owners;
+    private List<Owner> owners = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "vehicle_id")
@@ -56,15 +56,16 @@ public class Vehicle extends AbstractEntity {
         this.model = model;
     }
 
-    public Set<Owner> getOwners() {
+    public List<Owner> getOwners() {
         return owners;
     }
 
-    public void setOwner(Owner owner) {
-        this.owners.add(owner);
+    public void setOwners(List<Owner> owners){
+        this.owners = owners;
     }
 
     public void removeOwner(Owner owner){
+        owner.removeVehicle(this);
         this.owners.remove(owner);
     }
 

@@ -1,4 +1,4 @@
-package org.launchcode.maintainer.models.data;
+package org.launchcode.maintainer.service.data;
 
 import org.launchcode.maintainer.models.Vehicle;
 import org.springframework.data.repository.CrudRepository;
@@ -10,6 +10,6 @@ import javax.transaction.Transactional;
 @Transactional
 public interface VehicleRepository extends CrudRepository<Vehicle, Integer> {
 
-    public Vehicle findByName(String name);
+//    public Vehicle findByName(String name);
 
 }

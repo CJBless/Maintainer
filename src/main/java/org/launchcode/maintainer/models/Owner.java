@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 
 @Entity
 public class Owner extends AbstractEntity {
@@ -22,7 +19,7 @@ public class Owner extends AbstractEntity {
             @JoinColumn(name = "vehicle_id")
     })
     @JsonIgnore
-    private Set<Vehicle> vehicles = new HashSet<>(0);
+    private List<Vehicle> vehicles = new ArrayList<>();
 
     public Owner() {}
 
@@ -34,15 +31,16 @@ public class Owner extends AbstractEntity {
         this.role = role;
     }
 
-    public Set<Vehicle> getVehicles() {
+    public List<Vehicle> getVehicles() {
         return vehicles;
     }
 
-    public void setVehicles(Vehicle vehicle){
-        this.vehicles.add(vehicle);
+    public void setVehicles(List<Vehicle> vehicles){
+        this.vehicles = vehicles;
     }
 
     public void removeVehicle(Vehicle vehicle){
+        vehicle.removeOwner(this);
         this.vehicles.remove(vehicle);
     }
 }

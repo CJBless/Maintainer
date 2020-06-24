@@ -1,8 +1,9 @@
 package org.launchcode.maintainer.controllers;
 
+import org.launchcode.maintainer.models.Owner;
 import org.launchcode.maintainer.models.Vehicle;
-import org.launchcode.maintainer.models.data.OwnerRepository;
-import org.launchcode.maintainer.models.data.VehicleRepository;
+import org.launchcode.maintainer.service.OwnerService;
+import org.launchcode.maintainer.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -17,22 +19,23 @@ import java.util.Optional;
 public class VehicleController {
 
     @Autowired
-    private VehicleRepository vehicleRepository;
+    private VehicleService vehicleService;
 
     @Autowired
-    private OwnerRepository ownerRepository;
+    private OwnerService ownerService;
 
     @GetMapping
     public String displayAllVehicles(Model model) {
         model.addAttribute("title", "All Vehicles");
-        model.addAttribute("vehicles",vehicleRepository.findAll());
+        model.addAttribute("vehicles", vehicleService.getAllVehicles());
         return "vehicles/index";
     }
 
     @GetMapping("add")
     public String displayAddVehicleForm(Model model) {
-        model.addAttribute(new Vehicle());
-        model.addAttribute("users", ownerRepository.findAll());
+        model.addAttribute("vehicle", new Vehicle());
+        List<Owner> owners = ownerService.getAllOwners();
+        model.addAttribute("owners", owners);
         return "vehicles/add";
     }
 
@@ -40,16 +43,18 @@ public class VehicleController {
     public String processAddVehicleForm(@ModelAttribute @Valid Vehicle newVehicle,
                                         Errors errors, Model model) {
         if (errors.hasErrors()) {
+            model.addAttribute("errors", errors);
+            model.addAttribute("owners", ownerService.getAllOwners());
             return "vehicles/add";
         }
-        vehicleRepository.save(newVehicle);
+        vehicleService.addVehicle(newVehicle);
         return "redirect:";
     }
 
     @GetMapping("view/{vehicleId}")
     public String displayViewVehicle(Model model, @PathVariable Integer vehicleId) {
 
-        Optional optVehicle = vehicleRepository.findById(vehicleId);
+        Optional optVehicle = vehicleService.getSingleVehicle(vehicleId);
         if(optVehicle.isPresent()) {
             Vehicle vehicle = (Vehicle) optVehicle.get();
             model.addAttribute("vehicle", vehicle);

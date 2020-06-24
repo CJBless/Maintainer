@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container  body-content">
+<nav th:replace="fragments :: page-header"></nav>
+
+<p th:unless="${types} and ${types.size()}">No Appointment Types Found!</p>
+<div>
+    <h2>Appointment Types</h2>
+    <ul th:each="type : ${types}">
+        <li th:text="${type.name}">
+        </li>
+    </ul>
+    <a th:href="@{'/appointments/types/add'}">Add Appointment Types</a>
+</div>
+
+</body>
+</html>

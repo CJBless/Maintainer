@@ -36,9 +36,9 @@ public class AppointmentController {
 
     @GetMapping("add")
     public String displayAddAppointmentForm(Model model) {
-        model.addAttribute(new Appointment());
+        model.addAttribute("appointment", new Appointment());
         model.addAttribute("vehicles", vehicleService.getAllVehicles());
-        model.addAttribute("apptTypes", apptService.getAllAppointmentTypes());
+        model.addAttribute("apptTypes", apptTypeService.getAllAppointmentTypes());
         return "appointments/add";
     }
 
@@ -46,9 +46,12 @@ public class AppointmentController {
     public String processAddAppointmentForm(@ModelAttribute @Valid Appointment newAppointment,
                                             Errors errors, Model model) {
         if (errors.hasErrors()) {
+            model.addAttribute("errors", errors);
+            model.addAttribute("apptTypes", apptTypeService.getAllAppointmentTypes());
+            model.addAttribute("vehicles", vehicleService.getAllVehicles());
             return "appointments/add";
         }
-        model.addAttribute("appointment", apptService.getAllAppointments());
+//        model.addAttribute("appointment", apptService.getAllAppointments());
         apptService.addAppointment(newAppointment);
         return "redirect:";
     }

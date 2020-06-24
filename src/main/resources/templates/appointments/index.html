@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body class="container  body-content">
+<nav th:replace="fragments :: page-header"></nav>
 
 <p th:unless="${appointments} and ${appointments.size()}">No Appointments Scheduled!</p>
 <div>

@@ -3,16 +3,14 @@ package org.launchcode.maintainer.service;
 import org.launchcode.maintainer.models.Appointment;
 import org.launchcode.maintainer.models.Owner;
 import org.launchcode.maintainer.models.Vehicle;
-import org.launchcode.maintainer.models.data.AppointmentRepository;
-import org.launchcode.maintainer.models.data.OwnerRepository;
-import org.launchcode.maintainer.models.data.VehicleRepository;
+import org.launchcode.maintainer.service.data.AppointmentRepository;
+import org.launchcode.maintainer.service.data.OwnerRepository;
+import org.launchcode.maintainer.service.data.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class VehicleService {
@@ -47,7 +45,7 @@ public class VehicleService {
         Optional<Vehicle> vehicle = vehicleRepository.findById(id);
         if(vehicle.isPresent()){
             Vehicle vehicleObj = vehicle.get();
-            Set<Owner> owners = vehicleObj.getOwners();
+            List<Owner> owners = vehicleObj.getOwners();
             for(Owner owner : owners){
                 owner.removeVehicle(vehicleObj);
             }

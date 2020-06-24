@@ -1,7 +1,7 @@
 package org.launchcode.maintainer.service;
 
 import org.launchcode.maintainer.models.Owner;
-import org.launchcode.maintainer.models.data.OwnerRepository;
+import org.launchcode.maintainer.service.data.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

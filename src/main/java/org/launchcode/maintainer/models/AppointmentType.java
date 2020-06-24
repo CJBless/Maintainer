@@ -1,24 +1,29 @@
 package org.launchcode.maintainer.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 @Entity
+@Table(name = "appointment_type")
 public class AppointmentType extends AbstractEntity{
 
-    private static String longDescription;
-    private static int recurrence;
+    private String longDescription;
+    private int recurrence;
 
     @ManyToMany
-    @JoinColumn(name = "type_id")
-    @JsonIgnore
-    private Set<Appointment> appointments;
-
+    @JoinTable(name = "appointment_and_types",
+            joinColumns = {
+            @JoinColumn(name = "type_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "appt_id")
+    })
+    private List<Appointment> appointments = new ArrayList<>();
 
     public AppointmentType(){}
 
@@ -46,5 +51,17 @@ public class AppointmentType extends AbstractEntity{
         this.recurrence = recurrence;
     }
 
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
+    }
+
+    public void removeAppointment(Appointment appointment){
+        appointment.removeAppointmentType(this);
+        this.appointments.remove(appointment);
+    }
 
 }

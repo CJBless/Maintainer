@@ -8,6 +8,7 @@
 
 <form method="post" style="max-width:600px;">
     <div class="form-group">
+<!--        <input type="hidden" th:field="${vehicleOwner.vehicle}">-->
         <label th:for="name">Vehicle Name</label>
         <input class="form-control" th:field="${vehicle.name}" />
         <span th:errors="${vehicle.name}" class="error"></span>
@@ -36,12 +37,14 @@
     </div>
 
     <div class="form-group">
-        <label th:for="owner">Owner</label>
-        <select th:field="${vehicle.owner}" name="userId">
-            <option th:each="owner : ${users}"
+        <label th:for="owners">Owner(s)</label>
+        <select multiple
+                th:field="${vehicle.owners}">
+            <option th:each="owner : ${owners}"
                     th:text="${owner.name}"
                     th:value="${owner.id}"></option>
         </select>
+        <span th:errors="${vehicle.owners}" class="error"></span>
     </div>
 
     <input type="submit" value="Add Vehicle" />

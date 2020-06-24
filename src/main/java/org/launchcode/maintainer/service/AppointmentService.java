@@ -2,9 +2,9 @@ package org.launchcode.maintainer.service;
 
 import org.launchcode.maintainer.models.Appointment;
 import org.launchcode.maintainer.models.AppointmentType;
-import org.launchcode.maintainer.models.data.AppointmentRepository;
-import org.launchcode.maintainer.models.data.AppointmentTypeRepository;
-import org.launchcode.maintainer.models.data.VehicleRepository;
+import org.launchcode.maintainer.service.data.AppointmentRepository;
+import org.launchcode.maintainer.service.data.AppointmentTypeRepository;
+import org.launchcode.maintainer.service.data.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

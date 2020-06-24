@@ -1,6 +1,7 @@
 package org.launchcode.maintainer.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -37,26 +38,21 @@ public class Appointment {
 
     private String backgroundColor = "#FF0000";
 
+    @NotNull(message = "Must include at least one appointment type")
     @ManyToMany
-    private Set<AppointmentType> appointmentTypes = new HashSet<>(0);
-
-    private static List<AppointmentType> typesList = new ArrayList<>();
+    @JoinTable(name = "appointment_and_types",
+            joinColumns = {
+                @JoinColumn(name = "appt_id") }, inverseJoinColumns = {
+                @JoinColumn(name = "type_id")
+            })
+    @JsonIgnoreProperties("appointments")
+    private List<AppointmentType> appointmentTypes = new ArrayList<>();
 
     @NotNull
     @ManyToOne
     @JsonIgnore
     private Vehicle vehicle;
 
-    static {
-        typesList.add(new AppointmentType("Oil change", "Tire rotation and oil and/or oil filter change", 3000));
-        typesList.add(new AppointmentType("Replace tires", "Tire replacement", 0));
-        typesList.add(new AppointmentType("Tire health", "Check tire tread/pressure", 1000));
-        typesList.add(new AppointmentType("Battery", "Battery and cables check/replacement",3000));
-        typesList.add(new AppointmentType("Fluid check", "Check/add: transmission/wiper/brake/power steering fluid", 3000));
-        typesList.add(new AppointmentType("Wipers", "Check/replace wiper blades", 6000));
-        typesList.add(new AppointmentType("Filters", "Check/replace engine air filter", 6000));
-        typesList.add(new AppointmentType("12k maintenance", "Check/replace brakes/cabin air filter/fuel filter/coolant", 12000));
-    }
 
     public Appointment() {}
 
@@ -101,12 +97,17 @@ public class Appointment {
         this.location = location;
     }
 
-    public Set<AppointmentType> getAppointmentTypes() {
+    public List<AppointmentType> getAppointmentTypes() {
         return appointmentTypes;
     }
 
-    public void setAppointmentTypes(AppointmentType type){
-        appointmentTypes.add(type);
+    public void setAppointmentTypes(List<AppointmentType> types){
+        this.appointmentTypes = types;
+    }
+
+    public void removeAppointmentType(AppointmentType type){
+        type.removeAppointment(this);
+        this.appointmentTypes.remove(type);
     }
 
     public Vehicle getVehicle() {
