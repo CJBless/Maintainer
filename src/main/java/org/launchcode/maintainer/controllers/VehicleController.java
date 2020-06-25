@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("vehicles")
@@ -58,11 +59,22 @@ public class VehicleController {
         if(optVehicle.isPresent()) {
             Vehicle vehicle = (Vehicle) optVehicle.get();
             model.addAttribute("vehicle", vehicle);
+            model.addAttribute("ownerString", ownerService.getOwnersString(optVehicle));
             return "vehicles/view";
         } else {
             return "redirect:../";
         }
 
     }
+
+    @RequestMapping("view/{vehicleId}/delete")
+    public String deleteVehicle(Model model, @PathVariable Integer vehicleId){
+        vehicleService.deleteVehicle(vehicleId);
+        model.addAttribute("success", "Vehicle has been deleted");
+        return "redirect:../../";
+    }
+
+//    @RequestMapping("view/{vehicleId}/edit")
+
 
 }

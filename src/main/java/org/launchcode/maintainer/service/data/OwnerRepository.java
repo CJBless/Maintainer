@@ -8,4 +8,7 @@ import org.launchcode.maintainer.models.Owner;
 @Repository
 //@Transactional
 public interface OwnerRepository extends CrudRepository<Owner, Integer> {
+
+
+
 }

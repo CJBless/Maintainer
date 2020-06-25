@@ -5,21 +5,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Owner extends AbstractEntity {
 
-    @NotBlank(message = "role must not be empty")
+    @NotBlank(message = "Role must not be empty")
     private String role;
 
-    @ManyToMany
-    @JoinTable(name = "vehicle_owner", joinColumns = {
-            @JoinColumn(name = "owner_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "vehicle_id")
-    })
+    @ManyToMany(mappedBy="owners")
+//    @JoinTable(name = "vehicle_owner", joinColumns = {
+//            @JoinColumn(name = "owner_id") }, inverseJoinColumns = {
+//            @JoinColumn(name = "vehicle_id")
+//    })
     @JsonIgnore
-    private List<Vehicle> vehicles = new ArrayList<>();
+    private Set<Vehicle> vehicles = new HashSet<>();
 
     public Owner() {}
 
@@ -31,16 +33,16 @@ public class Owner extends AbstractEntity {
         this.role = role;
     }
 
-    public List<Vehicle> getVehicles() {
+    public Set<Vehicle> getVehicles() {
         return vehicles;
     }
 
-    public void setVehicles(List<Vehicle> vehicles){
+    public void setVehicles(Set<Vehicle> vehicles){
         this.vehicles = vehicles;
     }
 
     public void removeVehicle(Vehicle vehicle){
-        vehicle.removeOwner(this);
         this.vehicles.remove(vehicle);
+//        vehicle.removeOwner(this);
     }
 }

@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,17 +16,18 @@ import java.util.Set;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Vehicle extends AbstractEntity {
 
+    @Size(max=20, message="Must not exceed 20 characters")
     @NotBlank(message = "Must not be blank")
     private String year, make, model;
 
-    @NotNull(message = "Must include at least one owner.")
+    @NotNull(message = "Must include at least one owner")
     @ManyToMany
     @JoinTable(name = "vehicle_owner", joinColumns = {
             @JoinColumn(name = "vehicle_id") }, inverseJoinColumns = {
             @JoinColumn(name = "owner_id")
     })
     @JsonIgnoreProperties("vehicles")
-    private List<Owner> owners = new ArrayList<>();
+    private Set<Owner> owners = new HashSet<>();
 
     @OneToMany
     @JoinColumn(name = "vehicle_id")
@@ -56,17 +59,19 @@ public class Vehicle extends AbstractEntity {
         this.model = model;
     }
 
-    public List<Owner> getOwners() {
+    public Set<Owner> getOwners() {
         return owners;
     }
 
-    public void setOwners(List<Owner> owners){
+    public void setOwners(Set<Owner> owners){
         this.owners = owners;
     }
 
-    public void removeOwner(Owner owner){
-        owner.removeVehicle(this);
-        this.owners.remove(owner);
+    public void removeOwners(Set<Owner> owners){
+        this.owners.removeAll(owners);
+        for(Owner owner: owners){
+            owner.removeVehicle(this);
+        }
     }
 
     public List<Appointment> getAppointments() {

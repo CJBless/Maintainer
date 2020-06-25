@@ -3,20 +3,23 @@
 <head th:replace="fragments :: head"></head>
 
 <body class="container  body-content">
-<h1 th:text="${'Vehicle: ' + vehicle.name}">Default Title</h1>
-
 <nav th:replace="fragments :: page-header"></nav>
+
+<h1 th:text="${'Vehicle: ' + vehicle.name}">Default Title</h1>
 
 <div class="job-listing">
     <p th:text="${'Name: ' + vehicle.name}"></p>
     <p th:text="${'Year: ' + vehicle.year}"></p>
     <p th:text="${'Make: ' + vehicle.make}"></p>
     <p th:text="${'Model: ' + vehicle.model}"></p>
-    <span th:each="owner : ${vehicle.owners}">
-        <p th:text="${'Owner(s): ' + owner.name}"></p>
-    </span>
+    <p th:text="${'Owner(s): ' + ownerString}"></p>
 </div>
 
+<a th:href="@{'/vehicles/view/' + ${vehicle.id} + '/delete'}"
+    class="btn btn-info" role="button">Delete</a>
+<!--<button type="submit" id="submitButton">Delete</button>-->
 
+
+<div th:replace="fragments :: page-footer"></div>
 </body>
 </html>

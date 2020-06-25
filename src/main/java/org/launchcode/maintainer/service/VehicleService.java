@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class VehicleService {
@@ -41,22 +42,8 @@ public class VehicleService {
     }
 
     public void deleteVehicle(Integer id){
-
-        Optional<Vehicle> vehicle = vehicleRepository.findById(id);
-        if(vehicle.isPresent()){
-            Vehicle vehicleObj = vehicle.get();
-            List<Owner> owners = vehicleObj.getOwners();
-            for(Owner owner : owners){
-                owner.removeVehicle(vehicleObj);
-            }
             vehicleRepository.deleteById(id);
-        }
-
     }
-
-//    public void deleteVehicle(Integer id){
-//        vehicleRepository.deleteById(id);
-//    }
 
     public List<Appointment> findAllAppointments(){
         return (List<Appointment>) appointmentRepository.findAll();
@@ -65,6 +52,7 @@ public class VehicleService {
     public List<Owner> getAllOwners() {
         return (List<Owner>) ownerRepository.findAll();
     }
+
 
 }
 
