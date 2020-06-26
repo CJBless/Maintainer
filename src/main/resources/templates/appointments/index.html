@@ -4,9 +4,9 @@
 <body class="container  body-content">
 <nav th:replace="fragments :: page-header"></nav>
 
+<h2>Appointments</h2>
 <p th:unless="${appointments} and ${appointments.size()}">No Appointments Scheduled!</p>
 <div>
-    <h2>Appointments</h2>
     <ul>
         <li th:each="appointment : ${appointments}">
             <a th:href="@{'/appointments/view/' + ${appointment.id}}" th:text="${appointment.title + ': ' + appointment.vehicle.name}"></a>

@@ -56,6 +56,67 @@
 </head>
 <body>
 
+<th:block th:fragment="delete">
+    <button type="button"
+            class="btn btn-outline-danger"
+            data-toggle="modal"
+            data-target="#delete">
+        Delete</button>
+
+    <div id="delete" class="modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Please confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p th:text="${'Are you sure you want to delete ' + entityName + '?'}"></p>
+            </div>
+            <div class="modal-footer">
+                <a th:href="@{${link} + ${entityId} + '/delete'}"
+                   class="btn btn-outline-danger" role="button">Delete</a>
+                <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+</th:block>
+
+<th:block th:fragment="edit">
+    <button type="button"
+            class="btn btn-outline-success"
+            data-toggle="modal"
+            data-target="#edit">
+        Edit</button>
+
+    <div id="edit" class="modal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Please confirm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p th:text="${'Click continue to edit ' + entityName}"></p>
+                </div>
+                <div class="modal-footer">
+                    <a th:href="@{${link} + ${entityId} + '/edit'}"
+                       class="btn btn-outline-success" role="button">Continue</a>
+                    <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
 <div th:fragment="page-header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" th:href="@{/}">Maintainer</a>
@@ -73,14 +134,13 @@
             <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="@{#}"
+                    <a class="nav-link dropdown-toggle" th:href="@{#}"
                        id="navbarAppointments" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         Appointments</a>
                     <div class="dropdown-menu" aria-labelledby="navbarAppointments">
                         <a class="dropdown-item" th:href="@{/appointments}">View All</a>
                         <a class="dropdown-item" th:href="@{/appointments/add}">Add</a>
-                        <a class="dropdown-item" th:href="@{/appointments/edit}">Edit</a>
                     </div>
                 </li>
 
@@ -92,7 +152,6 @@
                     <div class="dropdown-menu" aria-labelledby="navbarUsers">
                         <a class="dropdown-item" th:href="@{/users}">View All</a>
                         <a class="dropdown-item" th:href="@{/users/add}">Add</a>
-                        <a class="dropdown-item" th:href="@{/users/edit}">Edit</a>
                     </div>
                 </li>
 
@@ -104,7 +163,6 @@
                     <div class="dropdown-menu" aria-labelledby="navbarVehicles">
                         <a class="dropdown-item" th:href="@{/vehicles}">View All</a>
                         <a class="dropdown-item" th:href="@{/vehicles/add}">Add</a>
-                        <a class="dropdown-item" th:href="@{/vehicles/edit}">Edit</a>
                     </div>
                 </li>
             </ul>

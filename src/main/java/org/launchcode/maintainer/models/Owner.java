@@ -43,6 +43,5 @@ public class Owner extends AbstractEntity {
 
     public void removeVehicle(Vehicle vehicle){
         this.vehicles.remove(vehicle);
-//        vehicle.removeOwner(this);
     }
 }

@@ -3,11 +3,16 @@
 <head th:replace="fragments :: head"></head>
 
 <body class="container  body-content">
-<nav th:replace="fragments :: page-header"></nav>
 
+<nav th:replace="fragments :: page-header"></nav>
+<div th:if="${message}"
+     class="alert alert-dismissible alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong th:text="${message}"></strong>
+</div>
 <h1 th:text="${'Vehicle: ' + vehicle.name}">Default Title</h1>
 
-<div class="job-listing">
+<div>
     <p th:text="${'Name: ' + vehicle.name}"></p>
     <p th:text="${'Year: ' + vehicle.year}"></p>
     <p th:text="${'Make: ' + vehicle.make}"></p>
@@ -15,9 +20,9 @@
     <p th:text="${'Owner(s): ' + ownerString}"></p>
 </div>
 
-<a th:href="@{'/vehicles/view/' + ${vehicle.id} + '/delete'}"
-    class="btn btn-info" role="button">Delete</a>
-<!--<button type="submit" id="submitButton">Delete</button>-->
+<th:block th:replace="fragments :: delete"></th:block>
+
+<th:block th:replace="fragments :: edit"></th:block>
 
 
 <div th:replace="fragments :: page-footer"></div>

@@ -20,7 +20,7 @@ public class Appointment {
     @GeneratedValue
     private Integer id;
 
-    @NotBlank
+    @NotBlank(message = "Must include a title")
     private String title;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -33,7 +33,7 @@ public class Appointment {
     @NotNull
     private LocalDateTime end;
 
-    @NotBlank
+    @NotBlank(message = "Must include a location")
     private String location;
 
     private String backgroundColor = "#FF0000";

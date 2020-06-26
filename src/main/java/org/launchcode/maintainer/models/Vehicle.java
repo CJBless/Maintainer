@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class Vehicle extends AbstractEntity {
     @NotBlank(message = "Must not be blank")
     private String year, make, model;
 
-    @NotNull(message = "Must include at least one owner")
+    @NotEmpty(message = "Must include at least one owner")
     @ManyToMany
     @JoinTable(name = "vehicle_owner", joinColumns = {
             @JoinColumn(name = "vehicle_id") }, inverseJoinColumns = {

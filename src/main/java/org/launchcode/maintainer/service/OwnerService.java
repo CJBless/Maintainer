@@ -16,9 +16,6 @@ public class OwnerService {
     @Autowired
     private OwnerRepository ownerRepository;
 
-    @Autowired
-    private VehicleService vehicleService;
-
     public List<Owner> getAllOwners() {
         return (List<Owner>) ownerRepository.findAll();
     }
@@ -31,12 +28,26 @@ public class OwnerService {
         return ownerRepository.findById(id);
     }
 
-    public void updateOwner(Integer id, Owner owner){
+    public void updateOwner(Integer ownerId, Owner editOwner){
+        Owner owner = ownerRepository.findById(ownerId).get();
+        owner.setRole(editOwner.getRole());
+        owner.setVehicles(editOwner.getVehicles());
+        owner.setName(editOwner.getName());
         ownerRepository.save(owner);
     }
 
-    public void deleteOwner(Integer id) {
-        ownerRepository.deleteById(id);
+    public void deleteOwner(Integer ownerId) {
+        Optional<Owner> optOwner = ownerRepository.findById(ownerId);
+        Set<Owner> ownerSet = new HashSet<>();
+        Set<Vehicle> vehiclesList = new HashSet<>();
+        optOwner.ifPresent(owner -> {
+            ownerSet.add(owner);
+            vehiclesList.addAll(owner.getVehicles());
+        });
+        for(Vehicle vehicle : vehiclesList){
+            vehicle.removeOwners(ownerSet);
+        }
+        ownerRepository.deleteById(ownerId);
     }
 
     public String getOwnersString(Optional optVehicle) {
