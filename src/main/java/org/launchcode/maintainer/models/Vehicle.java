@@ -20,6 +20,7 @@ public class Vehicle extends AbstractEntity {
     @NotBlank(message = "Must not be blank")
     private String year, make, model;
 
+<<<<<<< HEAD
     @NotNull(message = "Must include at least one owner")
     @ManyToMany
     @JoinTable(name = "vehicle_owner", joinColumns = {
@@ -28,6 +29,16 @@ public class Vehicle extends AbstractEntity {
     })
     @JsonIgnoreProperties("vehicles")
     private Set<Owner> owners = new HashSet<>();
+=======
+    @NotNull
+    @ManyToMany
+    @JoinTable(
+            name = "vehicle_users",
+            joinColumns = @JoinColumn(name = "vehicles_id"),
+            inverseJoinColumns = @JoinColumn(name = "users_id")
+    )
+    private final List<User> users = new ArrayList<>();
+>>>>>>> master
 
     @OneToMany
     @JoinColumn(name = "vehicle_id")
@@ -59,6 +70,7 @@ public class Vehicle extends AbstractEntity {
         this.model = model;
     }
 
+<<<<<<< HEAD
     public Set<Owner> getOwners() {
         return owners;
     }
@@ -71,6 +83,15 @@ public class Vehicle extends AbstractEntity {
         this.owners.removeAll(owners);
         for(Owner owner: owners){
             owner.removeVehicle(this);
+=======
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        for(User user : users){
+            this.users.add(user);
+>>>>>>> master
         }
     }
 
