@@ -2,8 +2,10 @@ package org.launchcode.maintainer.controllers;
 
 import org.launchcode.maintainer.models.Owner;
 import org.launchcode.maintainer.models.Vehicle;
+
 import org.launchcode.maintainer.service.OwnerService;
 import org.launchcode.maintainer.service.VehicleService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,7 +66,6 @@ public class VehicleController {
             model.addAttribute("entityId", vehicle.getId());
             model.addAttribute("entityName", vehicle.getName());
             model.addAttribute("link", "/vehicles/view/");
-            model.addAttribute("ownerString", ownerService.getOwnersString(optVehicle));
             return "vehicles/view";
         } else {
             return "redirect:../";

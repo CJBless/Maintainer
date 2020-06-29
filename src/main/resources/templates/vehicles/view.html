@@ -17,7 +17,15 @@
     <p th:text="${'Year: ' + vehicle.year}"></p>
     <p th:text="${'Make: ' + vehicle.make}"></p>
     <p th:text="${'Model: ' + vehicle.model}"></p>
+<<<<<<< HEAD
     <p th:text="${'Owner(s): ' + ownerString}"></p>
+=======
+    <p>
+        <span th:text="${'Owner(s): '}">
+            <p th:each="user : ${users}"  th:text="${user}"></p>
+        </span>
+    </p>
+>>>>>>> master
 </div>
 
 <th:block th:replace="fragments :: delete"></th:block>
