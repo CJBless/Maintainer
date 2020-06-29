@@ -11,7 +11,7 @@
     <div class="form-group">
         <label th:for="title">Appointment Name</label>
         <input class="form-control" th:field="${appointment.title}" />
-<!--        <span th:errors="*{name}" class="error"></span>-->
+        <span th:errors="${appointment.title}" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -22,6 +22,7 @@
                     th:text="${type.name + '- ' + type.longDescription}"
                     th:value="${type.id}"></option>
         </select>
+        <span th:errors="${appointment.appointmentTypes}" class="text-danger"></span>
     </div>
 
     <div class="container">
@@ -37,9 +38,10 @@
                 <label th:for="end">Appointment End Date</label>
                 <input type="datetime-local" class="form-control datetimepicker-input"
                        th:field="${appointment.end}"/>
-                <!--        <span th:errors="${appointment.date}" class="error"></span>-->
             </div>
         </div>
+        <span th:errors="${appointment.start}" class="text-danger"></span>
+        <span th:errors="${appointment.end}" class="text-danger"></span>
     </div>
     <script type="text/javascript">
         function() {
@@ -57,7 +59,7 @@
     <div class="form-group">
         <label th:for="location">Appointment Location</label>
         <input class="form-control" th:field="${appointment.location}" />
-<!--        <span th:errors="${appointment.location}" class="error"></span>-->
+        <span th:errors="${appointment.location}" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -67,6 +69,7 @@
                     th:text="${vehicle.name}"
                     th:value="${vehicle.id}"></option>
         </select>
+        <span th:errors="${appointment.vehicle}" class="text-danger"></span>
     </div>
 
     <input type="submit" value="Add Appointment" />

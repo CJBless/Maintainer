@@ -37,20 +37,24 @@ public class VehicleService {
         return vehicleRepository.findById(id);
     }
 
-    public void updateVehicle(Integer id, Vehicle vehicle){
+    public void updateVehicle(Integer vehicleId, Vehicle editVehicle){
+        Vehicle vehicle = vehicleRepository.findById(vehicleId).get();
+        vehicle.setMake(editVehicle.getMake());
+        vehicle.setModel(editVehicle.getModel());
+        vehicle.setOwners(editVehicle.getOwners());
+        vehicle.setYear(editVehicle.getYear());
+        vehicle.setName(editVehicle.getName());
         vehicleRepository.save(vehicle);
     }
 
-    public void deleteVehicle(Integer id){
-            vehicleRepository.deleteById(id);
+    public void deleteVehicle(Integer vehicleId){
+            vehicleRepository.deleteById(vehicleId);
     }
 
-    public List<Appointment> findAllAppointments(){
-        return (List<Appointment>) appointmentRepository.findAll();
-    }
-
-    public List<Owner> getAllOwners() {
-        return (List<Owner>) ownerRepository.findAll();
+    public List<Appointment> findAllAppointments(Integer vehicleId){
+        Vehicle vehicle = vehicleRepository.findById(vehicleId).get();
+        List<Appointment> appointments = vehicle.getAppointments();
+        return appointments;
     }
 
 

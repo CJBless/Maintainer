@@ -5,17 +5,27 @@
 <body>
 
 <div th:replace="fragments :: page-header"></div>
+<div th:if="${message}"
+     class="alert alert-dismissible alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong th:text="${message}"></strong>
+</div>
 
 <p th:unless="${owners} and ${owners.size()}">No users!</p>
 
 <div class="container body-content">
     <h2>Users</h2>
+    <p class="text-info" th:text="${'Select a user to view more details/edit'}"></p>
+
     <ul>
         <li th:each="owner : ${owners}">
-            <a th:href="@{'/owners/view/' + ${owner.id}}" th:text="${owner.name}"></a>
+            <h5>
+                <a th:href="@{'/users/view/' + ${owner.id}}" th:text="${owner.name + ': ' + owner.role}"></a>
+            </h5>
         </li>
     </ul>
-    <a th:href="@{'/owners/add'}">Add users</a>
+
+    <a th:href="@{'/users/add'}" role="button" class="btn btn-info btn-lg">Add users</a>
 
 </div>
 

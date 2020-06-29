@@ -3,14 +3,24 @@
 <head th:replace="fragments :: head">
 </head>
 <body class="container  body-content">
-<h1 th:text="${'User: ' + owner.name}">Default Title</h1>
 
 <nav th:replace="fragments :: page-header"></nav>
+<div th:if="${message}"
+     class="alert alert-dismissible alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong th:text="${message}"></strong>
+</div>
+<h1 th:text="${'User: ' + owner.name}">Default Title</h1>
 
-<div class="job-listing">
+<div>
     <p th:text="${'Name: ' + owner.name}"></p>
     <p th:text="${'Role: ' + owner.role}"></p>
 </div>
+
+<th:block th:replace="fragments :: delete"></th:block>
+
+<th:block th:replace="fragments :: edit"></th:block>
+
 
 <div th:replace="fragments :: page-footer"></div>
 </body>
