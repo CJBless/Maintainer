@@ -1,7 +1,7 @@
 package org.launchcode.maintainer.controllers;
 
-import org.launchcode.maintainer.models.User;
-import org.launchcode.maintainer.models.data.UserRepository;
+import org.launchcode.maintainer.models.Owner;
+import org.launchcode.maintainer.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,44 +12,44 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("users")
-public class UserController {
+@RequestMapping("owners")
+public class OwnerController {
 
     @Autowired
-    private UserRepository userRepository;
+    private OwnerService ownerService;
 
     @GetMapping
     public String displayUsers(Model model) {
         model.addAttribute("title", "All Users");
-        model.addAttribute("users", userRepository.findAll());
-        return "users/index";
+        model.addAttribute("owners", ownerService.getAllOwners());
+        return "owners/index";
     }
 
     @GetMapping("add")
     public String displayAddUserForm(Model model) {
-        model.addAttribute(new User());
-        model.addAttribute("users", userRepository.findAll());
-        return "users/add";
+        model.addAttribute(new Owner());
+        return "owners/add";
     }
 
     @PostMapping("add")
-    public String processAddUserForm(@ModelAttribute @Valid User newUser,
+    public String processAddUserForm(@ModelAttribute @Valid Owner newOwner,
                                         Errors errors, Model model) {
         if (errors.hasErrors()) {
-            return "users/add";
+            model.addAttribute("errors", errors);
+            return "owners/add";
         }
-        userRepository.save(newUser);
+        ownerService.addOwner(newOwner);
         return "redirect:";
     }
 
     @GetMapping("view/{userId}")
     public String displayViewUser(Model model, @PathVariable Integer userId) {
 
-        Optional<User> optUser = userRepository.findById(userId);
+        Optional<Owner> optUser = ownerService.getSingleOwner(userId);
         if(optUser.isPresent()) {
-            User user = optUser.get();
-            model.addAttribute("user", user);
-            return "users/view";
+            Owner owner = optUser.get();
+            model.addAttribute("owner", owner);
+            return "owners/view";
         } else {
             return "redirect:../";
         }
