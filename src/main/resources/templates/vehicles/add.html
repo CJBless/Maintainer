@@ -37,11 +37,14 @@
 
     <div class="form-group">
         <label th:for="user">Owner</label>
-        <select th:field="${vehicle.user}" name="userId">
+        <select class="custom-select" multiple
+                th:field="${vehicle.users}" name="userId">
             <option th:each="user : ${users}"
                     th:text="${user.name}"
                     th:value="${user.id}"></option>
         </select>
+
+<!--        <select multiple data-style="bg-white rounded-pill px-4 py-3 shadow-sm " class="selectpicker w-100">-->
     </div>
 
     <input type="submit" value="Add Vehicle" />

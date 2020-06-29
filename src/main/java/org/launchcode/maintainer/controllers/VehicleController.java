@@ -3,6 +3,7 @@ package org.launchcode.maintainer.controllers;
 import org.launchcode.maintainer.models.Vehicle;
 import org.launchcode.maintainer.models.data.UserRepository;
 import org.launchcode.maintainer.models.data.VehicleRepository;
+import org.launchcode.maintainer.models.dto.VehicleUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,6 +54,7 @@ public class VehicleController {
         if(optVehicle.isPresent()) {
             Vehicle vehicle = (Vehicle) optVehicle.get();
             model.addAttribute("vehicle", vehicle);
+            model.addAttribute("users", vehicle.getUsers());
             return "vehicles/view";
         } else {
             return "redirect:../";

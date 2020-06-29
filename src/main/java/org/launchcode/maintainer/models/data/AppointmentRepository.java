@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-//@Transactional
-public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
-
+@Transactional
+public interface AppointmentRepository extends CrudRepository<Appointment, Integer> {
 }
