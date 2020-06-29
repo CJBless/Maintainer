@@ -5,11 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -19,7 +16,7 @@ public class Vehicle extends AbstractEntity {
 
     @Size(max=20, message="Must not exceed 20 characters")
     @NotBlank(message = "Must not be blank")
-    private String year, make, model;
+    private String year, make, model, apptColor, txtColor;
 
     @NotEmpty(message = "Must include at least one owner")
     @ManyToMany
@@ -32,7 +29,9 @@ public class Vehicle extends AbstractEntity {
 
     @OneToMany
     @JoinColumn(name = "vehicle_id")
-    private List<Appointment> appointments = new ArrayList<>();
+    private Set<Appointment> appointments = new HashSet<>();
+
+//    private String image=
 
     public Vehicle() {}
 
@@ -48,6 +47,14 @@ public class Vehicle extends AbstractEntity {
         return model;
     }
 
+    public String getApptColor(){
+        return apptColor;
+    }
+
+    public String getTxtColor(){
+        return txtColor;
+    }
+
     public void setYear(String year) {
         this.year = year;
     }
@@ -58,6 +65,14 @@ public class Vehicle extends AbstractEntity {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public void setApptColor(String apptColor){
+        this.apptColor = apptColor;
+    }
+
+    public void setTxtColor(String txtColor){
+        this.txtColor = txtColor;
     }
 
     public Set<Owner> getOwners() {
@@ -75,8 +90,25 @@ public class Vehicle extends AbstractEntity {
         }
     }
 
-    public List<Appointment> getAppointments() {
+    public Set<Appointment> getAppointments() {
         return appointments;
     }
+
+    public void setAppointments(Set<Appointment> appointments){
+        this.appointments = appointments;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "year='" + year + '\'' +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", apptColor='" + apptColor + '\'' +
+                ", txtColor='" + txtColor + '\'' +
+                ", owners=" + owners +
+                '}';
+    }
+
 
 }

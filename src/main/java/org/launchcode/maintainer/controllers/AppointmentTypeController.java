@@ -41,6 +41,6 @@ public class AppointmentTypeController {
             return "appointments/add";
         }
         apptTypeService.addAppointmentType(newType);
-        return "redirect:";
+        return "redirect:../add";
     }
 }

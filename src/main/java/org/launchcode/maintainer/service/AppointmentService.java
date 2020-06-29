@@ -1,15 +1,19 @@
 package org.launchcode.maintainer.service;
 
+import org.apache.tomcat.jni.Local;
 import org.launchcode.maintainer.models.Appointment;
-import org.launchcode.maintainer.models.AppointmentType;
 import org.launchcode.maintainer.service.data.AppointmentRepository;
-import org.launchcode.maintainer.service.data.AppointmentTypeRepository;
-import org.launchcode.maintainer.service.data.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+
 
 @Component
 public class AppointmentService {
@@ -17,25 +21,31 @@ public class AppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    @Autowired
-    private AppointmentTypeRepository appointmentTypeRepository;
-
-    @Autowired
-    private VehicleRepository vehicleRepository;
-
     public List<Appointment> getAllAppointments(){
         return (List<Appointment>) appointmentRepository.findAll();
     }
 
     public void addAppointment(Appointment appointment) {
+        appointment.setBackgroundColor(appointment.getVehicle());
+        appointment.setTextColor(appointment.getVehicle());
         appointmentRepository.save(appointment);
     }
+
 
     public Optional<Appointment> getSingleAppointment(Integer id){
         return appointmentRepository.findById(id);
     }
 
-    public void updateAppointment(Integer id, Appointment appointment){
+    public void updateAppointment(Integer apptId, Appointment editAppointment){
+        Appointment appointment = appointmentRepository.findById(apptId).get();
+        appointment.setTitle(editAppointment.getTitle());
+        appointment.setStart(editAppointment.getStart());
+        appointment.setEnd(editAppointment.getEnd());
+        appointment.setLocation(editAppointment.getLocation());
+        appointment.setAppointmentTypes(editAppointment.getAppointmentTypes());
+        appointment.setVehicle(editAppointment.getVehicle());
+        appointment.setBackgroundColor(editAppointment.getVehicle());
+        appointment.setTextColor(editAppointment.getVehicle());
         appointmentRepository.save(appointment);
     }
 
@@ -43,8 +53,5 @@ public class AppointmentService {
         appointmentRepository.deleteById(id);
     }
 
-    public List<AppointmentType> getAllAppointmentTypes(){
-        return (List<AppointmentType>) appointmentTypeRepository.findAll();
-    }
 
 }

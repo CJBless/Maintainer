@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "appointment_type")
@@ -17,13 +14,9 @@ public class AppointmentType extends AbstractEntity{
     private String longDescription;
     private int recurrence;
 
-    @ManyToMany
-    @JoinTable(name = "appointment_and_types",
-            joinColumns = {
-            @JoinColumn(name = "type_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "appt_id")
-    })
-    private List<Appointment> appointments = new ArrayList<>();
+    @ManyToMany(mappedBy="appointmentTypes")
+    @JsonIgnore
+    private Set<Appointment> appointments = new HashSet<>();
 
     public AppointmentType(){}
 
@@ -51,16 +44,15 @@ public class AppointmentType extends AbstractEntity{
         this.recurrence = recurrence;
     }
 
-    public List<Appointment> getAppointments() {
+    public Set<Appointment> getAppointments() {
         return appointments;
     }
 
-    public void setAppointments(List<Appointment> appointments) {
+    public void setAppointments(Set<Appointment> appointments) {
         this.appointments = appointments;
     }
 
     public void removeAppointment(Appointment appointment){
-        appointment.removeAppointmentType(this);
         this.appointments.remove(appointment);
     }
 

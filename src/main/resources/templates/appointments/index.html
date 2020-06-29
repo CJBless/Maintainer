@@ -3,18 +3,35 @@
 <head th:replace="fragments :: head"></head>
 <body class="container  body-content">
 <nav th:replace="fragments :: page-header"></nav>
-
-<h2>Appointments</h2>
-<p th:unless="${appointments} and ${appointments.size()}">No Appointments Scheduled!</p>
-<div>
-    <ul>
-        <li th:each="appointment : ${appointments}">
-            <a th:href="@{'/appointments/view/' + ${appointment.id}}" th:text="${appointment.title + ': ' + appointment.vehicle.name}"></a>
-        </li>
-    </ul>
-    <a th:href="@{'/appointments/add'}">Add Appointments</a>
+<div th:if="${message}"
+     class="alert alert-dismissible alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong th:text="${message}"></strong>
 </div>
 
+
+<div class="h-100 d-flex justify-content-center align-items-center" style="height: 100%;">
+    <div class="jumbotron" style="background-color:white; display: inline-block; vertical-align: middle; width: 500px;">
+        <h2 class="display-3">Appointments</h2>
+        <p class="text-info" th:text="${'Select an appointment to view more details/edit'}"></p>
+        <hr class="my-2">
+        <p th:unless="${appointments} and ${appointments.size()}">No appointments scheduled!</p>
+        <div th:each="appt : ${appointments}">
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action"
+                   style="width:100%;height:100%;display:block;"
+                   th:href="@{'/appointments/view/' + ${appt.id}}"
+                   th:text="${appt.title + ' on ' + appt.vehicle.name}"></a>
+            </div>
+        </div>
+
+        <a th:href="@{'/appointments/add'}" role="button" class="btn btn-info btn-lg">Add Appointments</a>
+    </div>
+</div>
+
+
+
+<div th:replace="fragments :: footer-href"></div>
 <div th:replace="fragments :: page-footer"></div>
 </body>
 </html>

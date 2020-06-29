@@ -28,9 +28,31 @@
             center: 'title',
             right: 'dayGridMonth, timeGridWeek, timeGridDay'
             },
+
             events: {
                 url: '/api',
                 type: 'GET',
+            },
+
+            eventRender: function(info) {
+                var start = info.event.start;
+                var end = info.event.end;
+                var vehicle = info.event.extendedProps.vehicle.name;
+                var title = info.event.title;
+                var location = info.event.extendedProps.location;
+                var options = {weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'};
+
+                $(info.el).popover({
+                    html: true,
+                    title: vehicle + '- ' + title,
+                    placement: 'top',
+                    trigger : 'click',
+                    content: start.toLocaleString(undefined, options) + '<br><b> to </b>' + '<br>' + end.toLocaleString(undefined, options) + '<br><b>' + location,
+                    container: 'body'
+                }).popover('show');
+            },
+            eventClick: function(info) {
+                info.jsEvent.preventDefault();
             }
         });
         calendar.render();
@@ -45,14 +67,22 @@
     <meta http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width initial-scale=1">
 
-    <!-- Bootstrap stylesheets and script -->
     <link th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}" />
     <link th:href="@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" />
     <link th:href="@{/css/sketchy_theme.css}" rel="stylesheet" />
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css}" rel="stylesheet" />
 
     <script th:src="@{/js/bootstrap.js}"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js}"></script>
 
     <title th:text="'Maintainer' + ${title == null ? '' : ' :: ' + title}">Maintainer</title>
+    <style>
+        body {
+        height: auto;
+        width: 100%;
+        padding-top: 70px;
+        background-image: url("https://image.freepik.com/free-photo/squared-paper-texture_1154-677.jpg");
+    </style>
 </head>
 <body>
 
@@ -118,8 +148,12 @@
 </th:block>
 
 <div th:fragment="page-header">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" th:href="@{/}">Maintainer</a>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand"
+           data-toggle="tooltip"
+           data-placement="bottom"
+           title="Dashboard"
+           th:href="@{/}">Maintainer</a>
         <button class="navbar-toggler"
                 type="button"
                 data-toggle="collapse"
@@ -175,5 +209,10 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </div>
+
+<div class="footer" style="bottom:0; padding-top:25px;" th:fragment="footer-href">
+    <a href="https://www.freepik.com/free-photos-vectors/background"><small>Background photo created by kues - www.freepik.com</small></a>
+</div>
+
 </body>
 </html>

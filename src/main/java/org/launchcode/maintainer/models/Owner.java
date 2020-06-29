@@ -16,10 +16,6 @@ public class Owner extends AbstractEntity {
     private String role;
 
     @ManyToMany(mappedBy="owners")
-//    @JoinTable(name = "vehicle_owner", joinColumns = {
-//            @JoinColumn(name = "owner_id") }, inverseJoinColumns = {
-//            @JoinColumn(name = "vehicle_id")
-//    })
     @JsonIgnore
     private Set<Vehicle> vehicles = new HashSet<>();
 
@@ -44,4 +40,5 @@ public class Owner extends AbstractEntity {
     public void removeVehicle(Vehicle vehicle){
         this.vehicles.remove(vehicle);
     }
+
 }

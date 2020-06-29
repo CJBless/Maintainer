@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns:https="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments :: head"></head>
 
 <body class="container  body-content">
@@ -10,21 +10,26 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong th:text="${message}"></strong>
 </div>
-<h1 th:text="${'Vehicle: ' + vehicle.name}">Default Title</h1>
 
-<div>
-    <p th:text="${'Name: ' + vehicle.name}"></p>
-    <p th:text="${'Year: ' + vehicle.year}"></p>
-    <p th:text="${'Make: ' + vehicle.make}"></p>
-    <p th:text="${'Model: ' + vehicle.model}"></p>
-    <p th:text="${'Owner(s): ' + ownerString}"></p>
+<div class="card mb-3">
+    <h1 class="card-header" th:text="${'Vehicle: ' + vehicle.name}"></h1>
+    <div class="card-body">
+        <p class="card-text text-muted" th:text="${'Vehicle details'}"></p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" th:text="${'Year: ' + vehicle.year}"></li>
+        <li class="list-group-item" th:text="${'Make: ' + vehicle.make}"></li>
+        <li class="list-group-item" th:text="${'Model: ' + vehicle.model}"></li>
+        <li class="list-group-item" th:text="${'Owner(s): ' + ownerString}"></li>
+    </ul>
+    <div class="card-body">
+        <th:block th:replace="fragments :: delete"></th:block>
+        <th:block th:replace="fragments :: edit"></th:block>
+    </div>
 </div>
 
-<th:block th:replace="fragments :: delete"></th:block>
-
-<th:block th:replace="fragments :: edit"></th:block>
-
-
+<div th:replace="fragments :: footer-href"></div>
 <div th:replace="fragments :: page-footer"></div>
+</div>
 </body>
 </html>

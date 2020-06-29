@@ -10,18 +10,24 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong th:text="${message}"></strong>
 </div>
-<h1 th:text="${'User: ' + owner.name}">Default Title</h1>
 
-<div>
-    <p th:text="${'Name: ' + owner.name}"></p>
-    <p th:text="${'Role: ' + owner.role}"></p>
+
+<div class="card mb-3">
+    <h1 class="card-header" th:text="${'User: ' + owner.name}"></h1>
+    <div class="card-body">
+        <p class="card-text text-muted" th:text="${'User details'}"></p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" th:text="${'Name: ' + owner.name}"></li>
+        <li class="list-group-item" th:text="${'Role: ' + owner.role}"></li>
+    </ul>
+    <div class="card-body">
+        <th:block th:replace="fragments :: delete"></th:block>
+        <th:block th:replace="fragments :: edit"></th:block>
+    </div>
 </div>
 
-<th:block th:replace="fragments :: delete"></th:block>
-
-<th:block th:replace="fragments :: edit"></th:block>
-
-
+<div th:replace="fragments :: footer-href"></div>
 <div th:replace="fragments :: page-footer"></div>
 </body>
 </html>
