@@ -66,6 +66,8 @@ public class VehicleController {
             model.addAttribute("entityId", vehicle.getId());
             model.addAttribute("entityName", vehicle.getName());
             model.addAttribute("link", "/vehicles/view/");
+            model.addAttribute("ownerString", ownerService.getOwnersString(vehicle));
+
             return "vehicles/view";
         } else {
             return "redirect:../";

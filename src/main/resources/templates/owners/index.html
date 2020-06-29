@@ -11,24 +11,29 @@
     <strong th:text="${message}"></strong>
 </div>
 
-<p th:unless="${owners} and ${owners.size()}">No users!</p>
+<div class="h-100 d-flex justify-content-center align-items-center" style="height: 100%;">
+    <div class="jumbotron" style="background-color:white; display: inline-block; vertical-align: middle; width: 500px;">
+        <h2 class="display-3">Users</h2>
+        <p class="text-info" th:text="${'Select a user to view more details/edit'}"></p>
+        <hr class="my-2">
+        <p th:unless="${owners} and ${owners.size()}">No users!</p>
+            <div th:each="owner : ${owners}">
+                <div class="list-group">
+                    <a class="list-group-item list-group-item-action"
+                       style="width:100%;height:100%;display:block;"
+                       th:href="@{'/users/view/' + ${owner.id}}"
+                       th:text="${owner.name + ': ' + owner.role}"></a>
+                </div>
+            </div>
 
-<div class="container body-content">
-    <h2>Users</h2>
-    <p class="text-info" th:text="${'Select a user to view more details/edit'}"></p>
-
-    <ul>
-        <li th:each="owner : ${owners}">
-            <h5>
-                <a th:href="@{'/users/view/' + ${owner.id}}" th:text="${owner.name + ': ' + owner.role}"></a>
-            </h5>
-        </li>
-    </ul>
-
-    <a th:href="@{'/users/add'}" role="button" class="btn btn-info btn-lg">Add users</a>
-
+        <a th:href="@{'/users/add'}" role="button" class="btn btn-info btn-lg">Add users</a>
+    </div>
 </div>
 
+
+
+
+<div th:replace="fragments :: footer-href"></div>
 <div th:replace="fragments :: page-footer"></div>
 </body>
 </html>

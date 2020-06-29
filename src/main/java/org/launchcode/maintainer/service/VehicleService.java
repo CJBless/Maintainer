@@ -9,6 +9,7 @@ import org.launchcode.maintainer.service.data.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -38,23 +39,44 @@ public class VehicleService {
     }
 
     public void updateVehicle(Integer vehicleId, Vehicle editVehicle){
-        Vehicle vehicle = vehicleRepository.findById(vehicleId).get();
-        vehicle.setMake(editVehicle.getMake());
-        vehicle.setModel(editVehicle.getModel());
-        vehicle.setOwners(editVehicle.getOwners());
-        vehicle.setYear(editVehicle.getYear());
-        vehicle.setName(editVehicle.getName());
-        vehicleRepository.save(vehicle);
+        Optional<Vehicle> optVehicle = vehicleRepository.findById(vehicleId);
+        if(optVehicle.isPresent()) {
+            Vehicle vehicle = optVehicle.get();
+            vehicle.setMake(editVehicle.getMake());
+            vehicle.setModel(editVehicle.getModel());
+            vehicle.setOwners(editVehicle.getOwners());
+            vehicle.setYear(editVehicle.getYear());
+            vehicle.setName(editVehicle.getName());
+            vehicle.setApptColor(editVehicle.getApptColor());
+            for (Appointment appt : vehicle.getAppointments()) {
+                appt.setBackgroundColor(vehicle);
+                appt.setTextColor(vehicle);
+            }
+            vehicleRepository.save(vehicle);
+        }
     }
 
     public void deleteVehicle(Integer vehicleId){
             vehicleRepository.deleteById(vehicleId);
     }
 
-    public List<Appointment> findAllAppointments(Integer vehicleId){
+    public Set<Appointment> findAllAppointments(Integer vehicleId){
         Vehicle vehicle = vehicleRepository.findById(vehicleId).get();
-        List<Appointment> appointments = vehicle.getAppointments();
-        return appointments;
+        return vehicle.getAppointments();
+    }
+
+    public String getVehiclesString(Owner owner) {
+        Set<Vehicle> vehicles = owner.getVehicles();
+        List<String> names = new ArrayList<>();
+        String allVehicles = "";
+        for (Vehicle vehicle : vehicles) {
+            names.add(vehicle.getName() + ": " + vehicle.getMake() + " " +
+                        vehicle.getModel());
+        }
+        for(String name : names){
+            allVehicles += name + "\n";
+        }
+        return allVehicles;
     }
 
 

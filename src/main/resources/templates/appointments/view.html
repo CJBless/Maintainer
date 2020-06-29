@@ -4,21 +4,35 @@
 
 
 <body class="container  body-content">
-<nav th:replace="fragments :: page-header"></nav>
-<h1 th:text="${'Appointment: ' + appointment.title}">Default Title</h1>
 
-<div>
-    <p th:text="${'Date and time: ' + appointment.dateTimeString}"></p>
-    <p th:text="${'Location: ' + appointment.location}"></p>
-    <p th:text="${'Vehicle: ' + appointment.vehicle.name}"></p>
-<!--    <span th:each="type : ${appointment.appointmentTypes}">-->
-    <p th:text="${'Appointment Type name: ' }"></p>
-        <span th:each="type : ${appointment.appointmentTypes}">
-            <p th:text="${type.name}"></p>
-       </span>
+<nav th:replace="fragments :: page-header"></nav>
+<div th:if="${message}"
+     class="alert alert-dismissible alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong th:text="${message}"></strong>
+</div>
+
 
 </div>
 
+<div class="card mb-3">
+    <h1 class="card-header" th:text="${'Appointment: ' + appointment.title}"></h1>
+    <div class="card-body">
+        <p class="card-text text-muted" th:text="${'Appointment details'}"></p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" th:text="${'Start date and time: ' + appointment.dateTimeString}"></li>
+        <li class="list-group-item" th:text="${'Appointment Type: ' + apptTypes}"></li>
+        <li class="list-group-item" th:text="${'Location: ' + appointment.location}"></li>
+        <li class="list-group-item" th:text="${'Vehicle: ' + appointment.vehicle.name}"></li>
+    </ul>
+    <div class="card-body">
+        <th:block th:replace="fragments :: delete"></th:block>
+        <th:block th:replace="fragments :: edit"></th:block>
+    </div>
+</div>
+
+<div th:replace="fragments :: footer-href"></div>
 <div th:replace="fragments :: page-footer"></div>
 </body>
 </html>

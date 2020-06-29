@@ -8,7 +8,7 @@
 
 <form method="post" style="max-width:600px;">
     <div class="form-group">
-        <label th:for="name">Vehicle Name</label>
+        <label th:for="name">Name</label>
         <input class="form-control" th:field="${vehicle.name}" />
         <span th:errors="${vehicle.name}" class="text-danger"></span>
     </div>
@@ -48,9 +48,19 @@
 
     </div>
 
+    <div class="form-group">
+        <label th:for="apptColor" th:text="${'Appointment Background Color'}">
+            <p class="text-info" th:text="${'Set the vehicle calendar color'}"></p>
+        </label>
+            <input class="form-control" type="color" th:field="${vehicle.apptColor}" value="#ff0000">
+        <label th:for="txtColor" th:text="${'Appointment Text Color'}"></label>
+            <input class="form-control" type="color" th:field="${vehicle.txtColor}" value="#000000">
+    </div>
+
     <input type="submit" class="btn btn-primary" th:value="${title}" />
 </form>
 
+<div th:replace="fragments :: footer-href"></div>
 <div th:replace="fragments :: page-footer"></div>
 </body>
 </html>

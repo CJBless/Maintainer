@@ -50,8 +50,7 @@ public class OwnerService {
         ownerRepository.deleteById(ownerId);
     }
 
-    public String getOwnersString(Optional optVehicle) {
-        Vehicle vehicle = (Vehicle) optVehicle.get();
+    public String getOwnersString(Vehicle vehicle) {
         Set<Owner> owners = vehicle.getOwners();
         List<String> names = new ArrayList<>();
         String allOwners = "";
@@ -67,7 +66,6 @@ public class OwnerService {
         }
         return allOwners;
     }
-
 
 
 }

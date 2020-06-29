@@ -20,23 +20,19 @@ public class Appointment {
     @GeneratedValue
     private Integer id;
 
-    @NotBlank(message = "Must include a title")
-    private String title;
+    @NotBlank(message = "This is a required field")
+    private String title, location;
+
+    private String backgroundColor;
+    private String textColor;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @NotNull
     private LocalDateTime start;
 
-    private String dateTimeString;
-
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @NotNull
     private LocalDateTime end;
-
-    @NotBlank(message = "Must include a location")
-    private String location;
-
-    private String backgroundColor = "#FF0000";
 
     @NotNull(message = "Must include at least one appointment type")
     @ManyToMany
@@ -46,11 +42,12 @@ public class Appointment {
                 @JoinColumn(name = "type_id")
             })
     @JsonIgnoreProperties("appointments")
-    private List<AppointmentType> appointmentTypes = new ArrayList<>();
+    private Set<AppointmentType> appointmentTypes = new HashSet<>();
 
     @NotNull
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties({"id", "year", "make", "model", "apptColor",
+                            "txtColor", "owners", "appointments"})
     private Vehicle vehicle;
 
 
@@ -68,6 +65,30 @@ public class Appointment {
         this.title = title;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(Vehicle vehicle){
+        this.backgroundColor = vehicle.getApptColor();
+    }
+
+    public String getTextColor(){
+        return textColor;
+    }
+
+    public void setTextColor(Vehicle vehicle){
+        this.textColor = vehicle.getTxtColor();
+    }
+
     public LocalDateTime getStart() {
         return start;
     }
@@ -77,8 +98,7 @@ public class Appointment {
     }
 
     public String getDateTimeString() {
-        dateTimeString = start.format(DateTimeFormatter.ofPattern("E MMM dd yyyy, hh:mm a"));
-        return dateTimeString;
+        return start.format(DateTimeFormatter.ofPattern("E MMM dd yyyy, hh:mm a"));
     }
 
     public LocalDateTime getEnd() {
@@ -89,25 +109,19 @@ public class Appointment {
         this.end = dateTimeEnd;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public List<AppointmentType> getAppointmentTypes() {
+    public Set<AppointmentType> getAppointmentTypes() {
         return appointmentTypes;
     }
 
-    public void setAppointmentTypes(List<AppointmentType> types){
+    public void setAppointmentTypes(Set<AppointmentType> types){
         this.appointmentTypes = types;
     }
 
-    public void removeAppointmentType(AppointmentType type){
-        type.removeAppointment(this);
-        this.appointmentTypes.remove(type);
+    public void removeAppointmentType(Set<AppointmentType> types){
+        this.appointmentTypes.removeAll(types);
+        for(AppointmentType type : types){
+            type.removeAppointment(this);
+        }
     }
 
     public Vehicle getVehicle() {
@@ -118,29 +132,6 @@ public class Appointment {
         this.vehicle = vehicle;
     }
 
-    public String getBackgroundColor() {
-        return backgroundColor;
-    }
-
-    public void setBackgroundColor() {
-
-        if(this.title.equals("Tire rotation and oil and/or oil filter change") || this.title.equals("Tire replacement")) {
-            this.backgroundColor = "#FF0000";
-        } else if(this.title.equals("Tire health: tread/pressure/rotation")){
-            this.backgroundColor = "#20943F";
-        } else if(this.title.equals("Battery and cables check/replacement")){
-            this.backgroundColor = "#EE8211";
-        } else if(this.title.equals("Fluid check and add: transmission, wiper, brake, power steering")){
-            this.backgroundColor = "#EE8211";
-        } else if (this.title.equals("Wiper Blades: check/replacement")){
-            this.backgroundColor.equals("#20943F");
-        } else if(this.title.equals("12k maintenance: check/replacement brakes/cabin air filter/fuel filter/coolant")){
-            this.backgroundColor.equals("#FF0000");
-        } else {
-            this.backgroundColor.equals("#0275d8");
-        }
-
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -160,12 +151,13 @@ public class Appointment {
         return "Appointment{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", start=" + start +
-                ", dateTimeString='" + dateTimeString + '\'' +
-                ", end=" + end +
                 ", location='" + location + '\'' +
                 ", backgroundColor='" + backgroundColor + '\'' +
-                ", vehicle=" + vehicle +
+                ", textColor='" + textColor + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                ", appointmentTypes=" + appointmentTypes +
+                ", vehicle=" + vehicle.getName() +
                 '}';
     }
 }
