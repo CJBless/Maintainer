@@ -4,16 +4,26 @@
 <body class="container  body-content">
 <nav th:replace="fragments :: page-header"></nav>
 
-<p th:unless="${types} and ${types.size()}">No Appointment Types Found!</p>
-<div>
-    <h2>Appointment Types</h2>
-    <ul th:each="type : ${types}">
-        <li th:text="${type.name}">
-        </li>
-    </ul>
-    <a th:href="@{'/appointments/types/add'}">Add Appointment Types</a>
+<div class="h-100 d-flex justify-content-center align-items-center" style="height: 100%;">
+    <div class="jumbotron" style="background-color:white; display: inline-block; vertical-align: middle; width: 500px;">
+        <h2 class="display-3">Appointment Types</h2>
+        <p class="text-info" th:text="${'Select an appointment type to view more details/edit'}"></p>
+        <hr class="my-2">
+        <p th:unless="${types} and ${types.size()}">No appointment types found!</p>
+        <div th:each="type : ${types}">
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action"
+                   style="width:100%;height:100%;display:block;"
+                   th:href="@{'/appointments/types/view/' + ${type.id}}"
+                   th:text="${type.name + ' every ' + type.recurrence + ' miles '}"></a>
+            </div>
+        </div>
+
+        <a th:href="@{'/appointments/types/add'}" role="button" class="btn btn-info btn-lg">Add Appointment Types</a>
+    </div>
 </div>
 
+<div th:replace="fragments :: footer-href"></div>
 <div th:replace="fragments :: page-footer"></div>
 </body>
 </html>

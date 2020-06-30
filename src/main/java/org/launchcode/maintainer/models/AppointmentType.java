@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.ReportAsSingleViolation;
+import javax.validation.constraints.*;
 import java.util.*;
 
 @Entity
 @Table(name = "appointment_type")
 public class AppointmentType extends AbstractEntity{
 
+    @NotBlank(message = "This is a required field")
     private String longDescription;
+
     private int recurrence;
 
     @ManyToMany(mappedBy="appointmentTypes")

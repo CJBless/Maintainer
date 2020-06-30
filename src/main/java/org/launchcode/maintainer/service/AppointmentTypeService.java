@@ -7,12 +7,10 @@ import org.launchcode.maintainer.models.Vehicle;
 import org.launchcode.maintainer.service.data.AppointmentRepository;
 import org.launchcode.maintainer.service.data.AppointmentTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class AppointmentTypeService {
@@ -20,11 +18,9 @@ public class AppointmentTypeService {
     @Autowired
     private AppointmentTypeRepository appointmentTypeRepository;
 
-    @Autowired
-    private AppointmentRepository appointmentRepository;
-
     public List<AppointmentType> getAllAppointmentTypes(){
-        return (List<AppointmentType>) appointmentTypeRepository.findAll();
+        List<AppointmentType> sorted = appointmentTypeRepository.findAll(Sort.by(Sort.Direction.ASC, "recurrence"));
+        return sorted;
     }
 
     public void addAppointmentType(AppointmentType type){
@@ -35,16 +31,18 @@ public class AppointmentTypeService {
         return appointmentTypeRepository.findById(id);
     }
 
-    public void updateAppointmentType(Integer id, AppointmentType type){
+    public void updateAppointmentType(Integer typeId, AppointmentType editType){
+        AppointmentType type = appointmentTypeRepository.findById(typeId).get();
+        type.setName(editType.getName());
+        type.setLongDescription(editType.getLongDescription());
+        type.setRecurrence(editType.getRecurrence());
+        type.setAppointments(editType.getAppointments());
         appointmentTypeRepository.save(type);
     }
 
     public void deleteAppointmentType(Integer id){
-        appointmentTypeRepository.deleteById(id);
-    }
 
-    public List<Appointment> getAllAppointments(){
-        return (List<Appointment>) appointmentRepository.findAll();
+        appointmentTypeRepository.deleteById(id);
     }
 
     public String getTypeString(Appointment appt) {
