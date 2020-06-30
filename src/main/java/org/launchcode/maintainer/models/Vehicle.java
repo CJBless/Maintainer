@@ -31,7 +31,6 @@ public class Vehicle extends AbstractEntity {
     @JoinColumn(name = "vehicle_id")
     private Set<Appointment> appointments = new HashSet<>();
 
-//    private String image=
 
     public Vehicle() {}
 
