@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+
+<body class="container  body-content">
+
+<nav th:replace="fragments :: page-header"></nav>
+<div th:if="${message}"
+     class="alert alert-dismissible alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong th:text="${message}"></strong>
+</div>
+
+
+</div>
+
+<div class="card mb-3">
+    <h1 class="card-header" th:text="${'Appointment Type: ' + type.name}"></h1>
+    <div class="card-body">
+        <p class="card-text text-muted" th:text="${'Appointment type details'}"></p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" th:text="${'Name: ' + type.name}"></li>
+        <li class="list-group-item" th:text="${'Description: ' + type.longDescription}"></li>
+        <li class="list-group-item" th:text="${'Occurs every ' + type.recurrence + ' miles'}"></li>
+    </ul>
+    <div class="card-body">
+        <th:block th:replace="fragments :: delete"></th:block>
+        <th:block th:replace="fragments :: edit"></th:block>
+    </div>
+</div>
+
+<div th:replace="fragments :: footer-href"></div>
+<div th:replace="fragments :: page-footer"></div>
+</body>
+</html>

@@ -173,8 +173,15 @@
                        aria-haspopup="true" aria-expanded="false">
                         Appointments</a>
                     <div class="dropdown-menu" aria-labelledby="navbarAppointments">
-                        <a class="dropdown-item" th:href="@{/appointments}">View All</a>
+                        <a class="dropdown-item" th:href="@{/appointments}">View All/Edit</a>
                         <a class="dropdown-item" th:href="@{/appointments/add}">Add</a>
+                        <a class="dropdown-item nav-link dropdown-toggle bg-dark" th:href="@{#}"
+                        id="apptTypes" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Appointment Types</a>
+                        <div class="dropdown-menu" aria-labelledby="apptTypes">
+                            <a class="dropdown-item" th:href="@{/appointments/types}">View All/Edit</a>
+                            <a class="dropdown-item" th:href="@{/appointments/types/add}">Add</a>
+                        </div>
                     </div>
                 </li>
 
@@ -184,7 +191,7 @@
                        aria-haspopup="true" aria-expanded="false">
                         Users</a>
                     <div class="dropdown-menu" aria-labelledby="navbarUsers">
-                        <a class="dropdown-item" th:href="@{/users}">View All</a>
+                        <a class="dropdown-item" th:href="@{/users}">View All/Edit</a>
                         <a class="dropdown-item" th:href="@{/users/add}">Add</a>
                     </div>
                 </li>
@@ -195,7 +202,7 @@
                        aria-haspopup="true" aria-expanded="false">
                         Vehicles</a>
                     <div class="dropdown-menu" aria-labelledby="navbarVehicles">
-                        <a class="dropdown-item" th:href="@{/vehicles}">View All</a>
+                        <a class="dropdown-item" th:href="@{/vehicles}">View All/Edit</a>
                         <a class="dropdown-item" th:href="@{/vehicles/add}">Add</a>
                     </div>
                 </li>

@@ -107,7 +107,7 @@ public class AppointmentController {
     }
 
     @PostMapping("view/{apptId}/edit")
-    public String processEditVehicle(@PathVariable Integer apptId,
+    public String processEditAppointment(@PathVariable Integer apptId,
                                      @ModelAttribute @Valid Appointment editedAppt,
                                      BindingResult result, Model model,
                                      RedirectAttributes redirectAttributes){
@@ -125,7 +125,7 @@ public class AppointmentController {
             return "appointments/add";
         }
         apptService.updateAppointment(apptId, editedAppt);
-        redirectAttributes.addFlashAttribute("message", "Appointment has been edited");
+        redirectAttributes.addFlashAttribute("message", "Appointment has been updated");
         return "redirect:/appointments/view/{apptId}";
     }
 
