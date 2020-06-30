@@ -36,6 +36,7 @@
     </div>
 
     <div class="form-group">
+
         <label th:for="owners">Owner(s)</label>
         <select class="form-control"
                 multiple
@@ -44,7 +45,7 @@
                     th:text="${owner.name}"
                     th:value="${owner.id}"></option>
         </select>
-        <span th:errors="${vehicle.owners}" class="text-danger"></span>
+
     </div>
 
     <div class="form-group">

@@ -18,6 +18,7 @@ public class Vehicle extends AbstractEntity {
     @NotBlank(message = "Must not be blank")
     private String year, make, model, apptColor, txtColor;
 
+
     @NotEmpty(message = "Must include at least one owner")
     @ManyToMany
     @JoinTable(name = "vehicle_owner", joinColumns = {
@@ -74,6 +75,7 @@ public class Vehicle extends AbstractEntity {
         this.txtColor = txtColor;
     }
 
+
     public Set<Owner> getOwners() {
         return owners;
     }
@@ -86,6 +88,7 @@ public class Vehicle extends AbstractEntity {
         this.owners.removeAll(owners);
         for(Owner owner: owners){
             owner.removeVehicle(this);
+
         }
     }
 
