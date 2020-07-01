@@ -13,13 +13,13 @@
 
 
 <div class="card mb-3">
-    <h1 class="card-header" th:text="${'User: ' + owner.name}"></h1>
+    <h1 class="card-header" th:text="${'User: ' + user.name}"></h1>
     <div class="card-body">
         <p class="card-text text-muted" th:text="${'User details'}"></p>
     </div>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item" th:text="${'Name: ' + owner.name}"></li>
-        <li class="list-group-item" th:text="${'Role: ' + owner.role}"></li>
+        <li class="list-group-item" th:text="${'Name: ' + user.name}"></li>
+<!--        <li class="list-group-item" th:text="${'Role: ' + owner.role}"></li>-->
     </ul>
     <div class="card-body">
         <th:block th:replace="fragments :: delete"></th:block>

@@ -33,7 +33,7 @@ public class HomeController {
     private RoleService repo;
 
 
-    @RequestMapping("/")
+    @RequestMapping("/dashboard")
     public String home(){
         return "dashboard";
     }
@@ -88,27 +88,5 @@ public class HomeController {
 
         return "login";
     }
-
-//    @PostMapping("/user/registration")
-//    public String processUserRegistration(@ModelAttribute @Valid User user,
-//                                                Errors errors, HttpServletRequest request,
-//                                                Model model){
-////        ModelAndView mav = new ModelAndView();
-//        if(errors.hasErrors()){
-//            model.addAttribute("title", "Register");
-//            return "registration";
-//        }
-//
-//        try {
-//            User registered = userService.registerNewUserAccount(user);
-//        } catch (IllegalArgumentException excep){
-//            mav.addObject("message", "An account for that username/email already exists");
-//            return mav;
-//        }
-//
-//        return new ModelAndView("dashboard", "user", user);
-//    }
-
-
 
 }

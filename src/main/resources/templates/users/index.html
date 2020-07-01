@@ -16,13 +16,13 @@
         <h2 class="display-3">Users</h2>
         <p class="text-info" th:text="${'Select a user to view more details/edit'}"></p>
         <hr class="my-2">
-        <p th:unless="${owners} and ${owners.size()}">No users!</p>
-            <div th:each="owner : ${owners}">
+        <p th:unless="${users} and ${users.size()}">No users!</p>
+            <div th:each="user : ${users}">
                 <div class="list-group">
                     <a class="list-group-item list-group-item-action"
                        style="width:100%;height:100%;display:block;"
-                       th:href="@{'/users/view/' + ${owner.id}}"
-                       th:text="${owner.name + ': ' + owner.role}"></a>
+                       th:href="@{'/users/view/' + ${user.id}}"
+                       th:text="${user.name}"></a>
                 </div>
             </div>
 
