@@ -23,15 +23,15 @@ public class UserController {
     @GetMapping
     public String displayUsers(Model model) {
         model.addAttribute("title", "All Users");
-        model.addAttribute("owners", userService.getAllUsers());
-        return "owners/index";
+        model.addAttribute("users", userService.getAllUsers());
+        return "users/index";
     }
 
     @GetMapping("add")
     public String displayAddUserForm(Model model) {
         model.addAttribute(new User());
         model.addAttribute("title", "Add User");
-        return "owners/add";
+        return "users/add";
     }
 
     @PostMapping("add")
@@ -39,7 +39,7 @@ public class UserController {
                                         Errors errors, Model model) {
         if (errors.hasErrors()) {
             model.addAttribute("errors", errors);
-            return "owners/add";
+            return "users/add";
         }
         userService.addUser(newUser);
         return "redirect:";
@@ -51,11 +51,11 @@ public class UserController {
         Optional<User> optUser = userService.getSingleUser(userId);
         if(optUser.isPresent()) {
             User user = optUser.get();
-            model.addAttribute("owner", user);
+            model.addAttribute("user", user);
             model.addAttribute("entityId", user.getId());
             model.addAttribute("entityName", user.getName());
             model.addAttribute("link", "/users/view/");
-            return "owners/view";
+            return "users/view";
         } else {
             return "redirect:../";
         }
@@ -76,9 +76,9 @@ public class UserController {
         Optional<User> optUser = userService.getSingleUser(userId);
         if(optUser.isPresent()){
             User user = optUser.get();
-            model.addAttribute("owner", user);
+            model.addAttribute("user", user);
             model.addAttribute("title", "Edit User");
-            return "owners/add";
+            return "users/add";
         } else {
             return "redirect:../";
         }
@@ -90,10 +90,10 @@ public class UserController {
                                   BindingResult result, Model model,
                                   RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
-            model.addAttribute("owner", editedUser);
+            model.addAttribute("user", editedUser);
             model.addAttribute("title", "Edit User");
             model.addAttribute("errors", result);
-            return "owners/add";
+            return "users/add";
         }
         userService.updateUser(userId, editedUser);
         redirectAttributes.addFlashAttribute("message", "User has been edited");

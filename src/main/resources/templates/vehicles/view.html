@@ -27,12 +27,6 @@
         <th:block th:replace="fragments :: edit"></th:block>
     </div>
 
-    <p>
-        <span th:text="${'Owner(s): '}">
-            <p th:each="user : ${users}"  th:text="${user}"></p>
-        </span>
-    </p>
-
 </div>
 
 <div th:replace="fragments :: footer-href"></div>
