@@ -1,10 +1,10 @@
 package org.launchcode.maintainer.service;
 
 import org.launchcode.maintainer.models.Appointment;
-import org.launchcode.maintainer.models.Owner;
+import org.launchcode.maintainer.models.User;
 import org.launchcode.maintainer.models.Vehicle;
 import org.launchcode.maintainer.service.data.AppointmentRepository;
-import org.launchcode.maintainer.service.data.OwnerRepository;
+import org.launchcode.maintainer.service.data.UserRepository;
 import org.launchcode.maintainer.service.data.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +20,6 @@ public class VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    @Autowired
-    private AppointmentRepository appointmentRepository;
-
-    @Autowired
-    private OwnerRepository ownerRepository;
 
     public List<Vehicle> getAllVehicles(){
         return (List<Vehicle>) vehicleRepository.findAll();
@@ -44,7 +39,7 @@ public class VehicleService {
             Vehicle vehicle = optVehicle.get();
             vehicle.setMake(editVehicle.getMake());
             vehicle.setModel(editVehicle.getModel());
-            vehicle.setOwners(editVehicle.getOwners());
+            vehicle.setUsers(editVehicle.getUsers());
             vehicle.setYear(editVehicle.getYear());
             vehicle.setName(editVehicle.getName());
             vehicle.setApptColor(editVehicle.getApptColor());
@@ -65,8 +60,8 @@ public class VehicleService {
         return vehicle.getAppointments();
     }
 
-    public String getVehiclesString(Owner owner) {
-        Set<Vehicle> vehicles = owner.getVehicles();
+    public String getVehiclesString(User user) {
+        Set<Vehicle> vehicles = user.getVehicles();
         List<String> names = new ArrayList<>();
         String allVehicles = "";
         for (Vehicle vehicle : vehicles) {

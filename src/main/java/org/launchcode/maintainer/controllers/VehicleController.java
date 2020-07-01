@@ -1,9 +1,8 @@
 package org.launchcode.maintainer.controllers;
 
-import org.launchcode.maintainer.models.Owner;
 import org.launchcode.maintainer.models.Vehicle;
 
-import org.launchcode.maintainer.service.OwnerService;
+import org.launchcode.maintainer.service.UserService;
 import org.launchcode.maintainer.service.VehicleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Controller
 @RequestMapping("vehicles")
@@ -27,7 +24,7 @@ public class VehicleController {
     private VehicleService vehicleService;
 
     @Autowired
-    private OwnerService ownerService;
+    private UserService userService;
 
     @GetMapping
     public String displayAllVehicles(Model model) {
@@ -39,7 +36,7 @@ public class VehicleController {
     @GetMapping("add")
     public String displayAddVehicleForm(Model model) {
         model.addAttribute("vehicle", new Vehicle());
-        model.addAttribute("owners", ownerService.getAllOwners());
+        model.addAttribute("owners", userService.getAllUsers());
         model.addAttribute("title", "Add Vehicle");
         return "vehicles/add";
     }
@@ -49,7 +46,7 @@ public class VehicleController {
                                         Errors errors, Model model) {
         if (errors.hasErrors()) {
             model.addAttribute("errors", errors);
-            model.addAttribute("owners", ownerService.getAllOwners());
+            model.addAttribute("owners", userService.getAllUsers());
             return "vehicles/add";
         }
         vehicleService.addVehicle(newVehicle);
@@ -66,7 +63,7 @@ public class VehicleController {
             model.addAttribute("entityId", vehicle.getId());
             model.addAttribute("entityName", vehicle.getName());
             model.addAttribute("link", "/vehicles/view/");
-            model.addAttribute("ownerString", ownerService.getOwnersString(vehicle));
+            model.addAttribute("ownerString", userService.getUsersString(vehicle));
 
             return "vehicles/view";
         } else {
@@ -91,7 +88,7 @@ public class VehicleController {
             Vehicle vehicle = optVehicle.get();
             model.addAttribute("vehicle", vehicle);
             model.addAttribute("title", "Edit Vehicle");
-            model.addAttribute("owners", ownerService.getAllOwners());
+            model.addAttribute("owners", userService.getAllUsers());
             return "vehicles/add";
         } else {
             return "redirect:../";
@@ -107,7 +104,7 @@ public class VehicleController {
             model.addAttribute("errors", result);
             model.addAttribute("vehicle", editedVehicle);
             model.addAttribute("title", "Edit Vehicle");
-            model.addAttribute("owners", ownerService.getAllOwners());
+            model.addAttribute("owners", userService.getAllUsers());
             return "vehicles/add";
         }
         vehicleService.updateVehicle(vehicleId, editedVehicle);

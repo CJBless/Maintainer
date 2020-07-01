@@ -1,15 +1,22 @@
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
+<html xmlns:th="http://www.thymeleaf.org/"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:replace="fragments :: dashboard"></head>
 
 <body>
 
 <div th:replace="fragments :: page-header"></div>
 
+
 <div style="max-width:auto; height:auto; padding-top:70px;">
     <div id="calendar"></div>
 </div>
+
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
 
 <div th:replace="fragments :: page-footer"></div>
 </body>
