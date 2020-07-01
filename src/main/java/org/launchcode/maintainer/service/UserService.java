@@ -1,6 +1,7 @@
 package org.launchcode.maintainer.service;
 
 
+import org.launchcode.maintainer.models.Appointment;
 import org.launchcode.maintainer.models.Role;
 import org.launchcode.maintainer.models.User;
 import org.launchcode.maintainer.models.Vehicle;
@@ -66,27 +67,6 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-
-
-
-//    public User getUserFromSession(HttpSession session){
-//        Integer userId = (Integer) session.getAttribute(userSessionKey);
-//        if(userId == null) {
-//            return null;
-//        }
-//
-//        Optional<User> user = userRepository.findById(userId);
-//
-//        if(user.isEmpty()) {
-//            return null;
-//        }
-//        return user.get();
-//    }
-
-//    private static void setUserInSession(HttpSession session, User user){
-//        session.setAttribute(userSessionKey, user.getId());
-//    }
-
     public List<User> getAllUsers(){
         return (List<User>) userRepository.findAll();
     }
@@ -136,6 +116,11 @@ public class UserService {
             }
         }
         return allUsers;
+    }
+
+    public Set<Role> findAllRoles(Integer userId){
+        User user = userRepository.findById(userId).get();
+        return user.getRoles();
     }
 
 }

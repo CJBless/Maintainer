@@ -104,7 +104,7 @@ public class VehicleController {
             model.addAttribute("errors", result);
             model.addAttribute("vehicle", editedVehicle);
             model.addAttribute("title", "Edit Vehicle");
-            model.addAttribute("owners", userService.getAllUsers());
+            model.addAttribute("users", userService.getAllUsers());
             return "vehicles/add";
         }
         vehicleService.updateVehicle(vehicleId, editedVehicle);

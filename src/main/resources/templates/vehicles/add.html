@@ -40,10 +40,10 @@
         <label th:for="owners">Owner(s)</label>
         <select class="form-control"
                 multiple
-                th:field="${vehicle.owners}">
-            <option th:each="owner : ${owners}"
-                    th:text="${owner.name}"
-                    th:value="${owner.id}"></option>
+                th:field="${vehicle.users}">
+            <option th:each="user : ${users}"
+                    th:text="${user.name}"
+                    th:value="${user.id}"></option>
         </select>
 
     </div>

@@ -1,6 +1,8 @@
 package org.launchcode.maintainer.controllers;
 
+import org.launchcode.maintainer.models.Role;
 import org.launchcode.maintainer.models.User;
+import org.launchcode.maintainer.service.RoleService;
 import org.launchcode.maintainer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -19,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping
     public String displayUsers(Model model) {
@@ -29,8 +36,10 @@ public class UserController {
 
     @GetMapping("add")
     public String displayAddUserForm(Model model) {
+        List<Role> roles = new ArrayList<>();
         model.addAttribute(new User());
         model.addAttribute("title", "Add User");
+        model.addAttribute("roles", roles);
         return "users/add";
     }
 
@@ -52,6 +61,7 @@ public class UserController {
         if(optUser.isPresent()) {
             User user = optUser.get();
             model.addAttribute("user", user);
+            model.addAttribute("roles", userService.findAllRoles(userId));
             model.addAttribute("entityId", user.getId());
             model.addAttribute("entityName", user.getName());
             model.addAttribute("link", "/users/view/");
@@ -77,6 +87,7 @@ public class UserController {
         if(optUser.isPresent()){
             User user = optUser.get();
             model.addAttribute("user", user);
+            model.addAttribute("roles", userService.findAllRoles(userId));
             model.addAttribute("title", "Edit User");
             return "users/add";
         } else {
@@ -92,6 +103,7 @@ public class UserController {
         if(result.hasErrors()){
             model.addAttribute("user", editedUser);
             model.addAttribute("title", "Edit User");
+            model.addAttribute("roles", roleService.getAllRoles());
             model.addAttribute("errors", result);
             return "users/add";
         }

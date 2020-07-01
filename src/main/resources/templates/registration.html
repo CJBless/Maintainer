@@ -18,7 +18,12 @@
         <div><label> Password: <input type="password" th:field="${user.password}"/> </label>
             <span class="errors" th:errors="${user.password}"></span></div>
         <div><label> Verify Password: <input type="password" th:field="${user.verifyPassword}"/> </label></div>
-        <div><label>Role: <input type="text" th:field="${user.roles}"/></label>
+        <div><label>Role: <select type="text" th:field="${user.roles}">
+            <span th:each="role : ${roles}">
+                <option th:text="${role.name}"
+                        th:value="${role.id}"></option>
+            </span>
+        </select></label>
             <span class="errors" th:errors="${user.roles}"></span></div>
         <div><input type="submit" value="Register"/></div>
     </form>

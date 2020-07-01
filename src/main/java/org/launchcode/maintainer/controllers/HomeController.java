@@ -80,6 +80,7 @@ public class HomeController {
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
+        model.addAttribute("roles", repo.getAllRoles());
         if (error != null)
             model.addAttribute("error", "Your username and/or password is invalid.");
 

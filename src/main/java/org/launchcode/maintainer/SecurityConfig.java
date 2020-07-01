@@ -31,21 +31,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().and().authorizeRequests().anyRequest().permitAll();
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/registration").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .usernameParameter("email")
-//                .loginProcessingUrl("/login")
-//                .defaultSuccessUrl("/dashboard", true)
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
+//        http.csrf().disable().cors().and().authorizeRequests().anyRequest().permitAll();
+        http
+                .authorizeRequests()
+                .antMatchers("/registration").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .usernameParameter("email")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/dashboard", true)
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
     }
 
     @Override
