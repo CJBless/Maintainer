@@ -2,8 +2,6 @@ package org.launchcode.maintainer.service;
 
 import org.launchcode.maintainer.models.Appointment;
 import org.launchcode.maintainer.models.AppointmentType;
-import org.launchcode.maintainer.models.Owner;
-import org.launchcode.maintainer.models.Vehicle;
 import org.launchcode.maintainer.service.data.AppointmentRepository;
 import org.launchcode.maintainer.service.data.AppointmentTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

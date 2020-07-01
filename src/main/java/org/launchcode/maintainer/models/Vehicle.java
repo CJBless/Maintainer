@@ -21,12 +21,12 @@ public class Vehicle extends AbstractEntity {
 
     @NotEmpty(message = "Must include at least one owner")
     @ManyToMany
-    @JoinTable(name = "vehicle_owner", joinColumns = {
+    @JoinTable(name = "vehicle_user", joinColumns = {
             @JoinColumn(name = "vehicle_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "owner_id")
+            @JoinColumn(name = "user_id")
     })
     @JsonIgnoreProperties("vehicles")
-    private Set<Owner> owners = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
     @OneToMany
     @JoinColumn(name = "vehicle_id")
@@ -76,19 +76,18 @@ public class Vehicle extends AbstractEntity {
     }
 
 
-    public Set<Owner> getOwners() {
-        return owners;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setOwners(Set<Owner> owners){
-        this.owners = owners;
+    public void setUsers(Set<User> users){
+        this.users = users;
     }
 
-    public void removeOwners(Set<Owner> owners){
-        this.owners.removeAll(owners);
-        for(Owner owner: owners){
-            owner.removeVehicle(this);
-
+    public void removeUsers(Set<User> users){
+        this.users.removeAll(users);
+        for(User user : users){
+            user.removeVehicle(this);
         }
     }
 
@@ -108,7 +107,7 @@ public class Vehicle extends AbstractEntity {
                 ", model='" + model + '\'' +
                 ", apptColor='" + apptColor + '\'' +
                 ", txtColor='" + txtColor + '\'' +
-                ", owners=" + owners +
+                ", owners=" + users +
                 '}';
     }
 
